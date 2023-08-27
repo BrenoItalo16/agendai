@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:ipancommerce/features/intro/pages/onboarding/onboarding_page.dart';
+import '../../features/intro/pages/onboarding/onboarding_page.dart';
 import '../../features/intro/pages/splash/splash_page.dart';
 
 final router = GoRouter(
