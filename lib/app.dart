@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ipancommerce/core/di/di.dart';
+import 'core/di/di.dart';
 import 'core/flavor/flavor_config.dart';
 import 'core/route/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
