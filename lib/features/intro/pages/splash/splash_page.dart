@@ -1,5 +1,4 @@
-import 'package:ipancommerce/core/route/app_routes.dart';
-
+import '../../../../core/route/app_routes.dart';
 import 'splash_page_actions.dart';
 import 'splash_page_cubit.dart';
 import 'package:flutter/material.dart';

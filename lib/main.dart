@@ -1,6 +1,5 @@
-import 'package:ipancommerce/core/flavor/flavor_config.dart';
-
 import 'app.dart';
+import 'core/flavor/flavor_config.dart';
 
 void main() {
   bootstrap(
