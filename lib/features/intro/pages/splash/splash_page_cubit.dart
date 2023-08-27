@@ -45,7 +45,7 @@ class SplashPageCubit extends Cubit<SplashPageState> {
       _actions?.navToForceUpdate();
       return;
     }
-
+    //Correct this issue later
     final shouldShowOnboarding = _appPreferences.shouldShowOnboarding;
 
     // if (shouldShowOnboarding) {
