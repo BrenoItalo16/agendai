@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "904880587175",
+    "project_id": "ipancommerce",
+    "storage_bucket": "ipancommerce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904880587175:android:325940ee017f7d820d7682",
+        "android_client_info": {
+          "package_name": "com.brenoitalo.ipancommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnwFiZXceyeOecKliO0NWVRKT9ev2TT_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

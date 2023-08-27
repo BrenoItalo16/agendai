@@ -1,0 +1,4 @@
+enum ValidateTokenFailed {
+  invalidToken,
+  unknownError,
+}
