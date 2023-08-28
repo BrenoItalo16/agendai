@@ -7,7 +7,7 @@ Your Custom Scheduling App!
 
 ## About the App
 
-[Still in development. Links not functional yet.]
+[This app is still under development. Links are not functional yet.]<br>
 Agendaí is the perfect solution to keep track of your appointments and schedules efficiently and conveniently. With an intuitive interface and powerful features, this app is designed to simplify the scheduling process in your life.
 
 ## Key Features
