@@ -1,3 +1,6 @@
+<img src="https://raw.githubusercontent.com/BrenoItalo16/agendai/main/assets/img/agendai_github_cover.png"/>
+<br>
+
 # Agendaí
 
 Your Custom Scheduling App!
