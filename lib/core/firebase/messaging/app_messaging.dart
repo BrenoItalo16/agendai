@@ -1,43 +1,33 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+enum AppMessagingStatus { denied, allowed, notDetermined }
+
 class AppMessaging {
-  AppMessaging(this._messaging) {
-    _configureMessaging();
-  }
+  AppMessaging(this._messaging);
 
   final FirebaseMessaging _messaging;
 
-  Future<void> _configureMessaging() async {
+  Future<AppMessagingStatus> checkStatus() async {
     final settings = await _messaging.getNotificationSettings();
-    print(settings.authorizationStatus);
+    return settings.authorizationStatus.toApp();
+  }
 
-    final result = await _messaging.requestPermission();
-    print(result.authorizationStatus);
-
-    final token = await _messaging.getToken();
-    print('O TOKEN É: $token');
-
-    //? Para uso em primeiro plano
-    FirebaseMessaging.onMessage.listen((message) {
-      print(message.notification?.title);
-    });
-
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print('Navegar para ${message.data["page"]}');
-    });
-
-    // final message = await _messaging.getInitialMessage();
-
-    _messaging.onTokenRefresh.listen((event) {});
+  Future<AppMessagingStatus> requestPermission() async {
+    final settings = await _messaging.requestPermission();
+    return settings.authorizationStatus.toApp();
   }
 }
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-
-  print('Handling a background message: ${message.notification?.title}');
+extension AuthorizationStatusX on AuthorizationStatus {
+  AppMessagingStatus toApp() {
+    switch (this) {
+      case AuthorizationStatus.authorized:
+      case AuthorizationStatus.provisional:
+        return AppMessagingStatus.allowed;
+      case AuthorizationStatus.denied:
+        return AppMessagingStatus.denied;
+      case AuthorizationStatus.notDetermined:
+        return AppMessagingStatus.notDetermined;
+    }
+  }
 }

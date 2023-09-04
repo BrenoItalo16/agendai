@@ -1,4 +1,8 @@
+import 'package:agendai/core/alert/alert_area.dart';
+import 'package:agendai/core/theme/app_theme.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/di.dart';
 import 'core/flavor/flavor_config.dart';
 import 'core/route/app_routes.dart';
@@ -13,8 +17,15 @@ Future<void> bootstrap(FlavorConfig config) async {
   );
 
   await configureDependencies(config);
+  // await Future.delayed(const Duration(seconds: 4));
 
-  runApp(const App());
+  runApp(
+    DevicePreview(
+      builder: (_) => const App(),
+      enabled: true,
+      // enabled: config.flavor == AppFlavor.dev,
+    ),
+  );
 }
 
 class App extends StatefulWidget {
@@ -27,9 +38,27 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
+    return RepositoryProvider(
+      create: (_) => AppTheme(),
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
+        theme: ThemeData.light().copyWith(
+          colorScheme: ThemeData.light().colorScheme.copyWith(
+                background: Colors.white,
+              ),
+        ),
+        locale: DevicePreview.locale(context),
+        builder: (context, child) {
+          final newChild = Stack(
+            children: [
+              if (child != null) child,
+              const AlertArea(),
+            ],
+          );
+          return DevicePreview.appBuilder(context, newChild);
+        },
+      ),
     );
   }
 }
