@@ -1,11 +1,10 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
-// class AppRemoteConfigKeys {
-//   static const appMinVersion = 'app_min_version';
-// }
-
 enum AppRemoteConfigKeys {
   appMinVersion('app_min_version', 1),
+
+  instagramUrl('instagram_url', 'https://instagram.com/'),
+
   maintenance('maintenance', false);
 
   const AppRemoteConfigKeys(this.key, this.defaultValue);
@@ -29,6 +28,8 @@ class AppRemoteConfig {
           AppRemoteConfigKeys.appMinVersion.defaultValue,
       AppRemoteConfigKeys.maintenance.key:
           AppRemoteConfigKeys.maintenance.defaultValue,
+      AppRemoteConfigKeys.instagramUrl.key:
+          AppRemoteConfigKeys.instagramUrl.defaultValue,
     });
 
     await _remoteConfig.fetchAndActivate();
@@ -43,4 +44,7 @@ class AppRemoteConfig {
 
   bool get isMaintenance =>
       _remoteConfig.getBool(AppRemoteConfigKeys.maintenance.key);
+
+  String get instagramUrl =>
+      _remoteConfig.getString(AppRemoteConfigKeys.instagramUrl.key);
 }

@@ -1,4 +1,4 @@
-package com.brenoitalo.ipancommerce
+package com.brenoitalo.agendai
 
 import io.flutter.embedding.android.FlutterActivity
 

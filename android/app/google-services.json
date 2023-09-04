@@ -1,26 +1,43 @@
 {
   "project_info": {
-    "project_number": "904880587175",
-    "project_id": "ipancommerce",
-    "storage_bucket": "ipancommerce.appspot.com"
+    "project_number": "1021405538840",
+    "project_id": "app-agendai",
+    "storage_bucket": "app-agendai.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:904880587175:android:325940ee017f7d820d7682",
+        "mobilesdk_app_id": "1:1021405538840:android:ca5ace461498c5b29bf16d",
         "android_client_info": {
-          "package_name": "com.brenoitalo.ipancommerce"
+          "package_name": "com.brenoitalo.agendai"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1021405538840-vdd2mn443mgh30t4l5iefasd1uj30l2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAnwFiZXceyeOecKliO0NWVRKT9ev2TT_o"
+          "current_key": "AIzaSyDR2x9feBhaFi6bmIKc59cOZ5yQCvLkXXY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1021405538840-vdd2mn443mgh30t4l5iefasd1uj30l2b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1021405538840-f81pi9ms90qp7tpadcfhl4fcpqrbaco8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.brenoitalo.agendai"
+              }
+            }
+          ]
         }
       }
     }

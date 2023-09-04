@@ -1,4 +1,5 @@
-import '../../../../core/route/app_routes.dart';
+import 'package:agendai/core/route/app_routes.dart';
+import 'package:agendai/core/theme/app_theme.dart';
 import 'splash_page_actions.dart';
 import 'splash_page_cubit.dart';
 import 'package:flutter/material.dart';
@@ -24,25 +25,35 @@ class _SplashPageState extends State<SplashPage> implements SplashPageActions {
 
   @override
   Widget build(BuildContext context) {
+    final appHeight = MediaQuery.of(context).size.height;
+    final appWidth = MediaQuery.of(context).size.width;
     return BlocProvider.value(
       value: cubit,
-      child: const Scaffold(
+      child: Scaffold(
         body: Center(
           //? Splash rive
-          child: RiveAnimation.asset('assets/rive/logo_entering.riv'),
+          child: Stack(
+            children: [
+              const RiveAnimation.asset('assets/rive/animated_logo_1.riv'),
+              Positioned(
+                right: 0,
+                top: appHeight / 2 - (appWidth / 6) + (appWidth * 0.45),
+                child: Container(
+                  height: appWidth / 5,
+                  width: appWidth / 2.2,
+                  color: AppTheme().white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   @override
-  void navToForceUpdate() {
-    context.go('/force-update');
-  }
-
-  @override
   void navToMaintenance() {
-    context.go('/maintenance');
+    context.go(AppRoutes.maintenance);
   }
 
   @override
@@ -52,17 +63,23 @@ class _SplashPageState extends State<SplashPage> implements SplashPageActions {
 
   @override
   void navToAuth() {
-    context.go('/auth');
+    context.go(AppRoutes.auth);
+  }
+
+  @override
+  void navToForceUpdate() {
+    context.go(AppRoutes.forceUpdate);
   }
 
   @override
   void navToHome() {
-    context.go('/home');
+    context.go('/alterar esta rota'); //TODO: Alterar esta rota para "home".
   }
 
   @override
   void dispose() {
     cubit.dispose();
+    cubit.close();
     super.dispose();
   }
 }

@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAnwFiZXceyeOecKliO0NWVRKT9ev2TT_o',
-    appId: '1:904880587175:android:325940ee017f7d820d7682',
-    messagingSenderId: '904880587175',
-    projectId: 'ipancommerce',
-    storageBucket: 'ipancommerce.appspot.com',
+    apiKey: 'AIzaSyDR2x9feBhaFi6bmIKc59cOZ5yQCvLkXXY',
+    appId: '1:1021405538840:android:ca5ace461498c5b29bf16d',
+    messagingSenderId: '1021405538840',
+    projectId: 'app-agendai',
+    storageBucket: 'app-agendai.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB6exeqU_WAHb5j1j7tFICWAmiOe0TDgI4',
-    appId: '1:904880587175:ios:472a408247727fd70d7682',
-    messagingSenderId: '904880587175',
-    projectId: 'ipancommerce',
-    storageBucket: 'ipancommerce.appspot.com',
-    iosBundleId: 'com.brenoitalo.ipancommerce',
+    apiKey: 'AIzaSyCy8EdP5sHFyMueDZaLEF_eEabvgICvjD4',
+    appId: '1:1021405538840:ios:886c2e54e419d66e9bf16d',
+    messagingSenderId: '1021405538840',
+    projectId: 'app-agendai',
+    storageBucket: 'app-agendai.appspot.com',
+    iosClientId: '1021405538840-f81pi9ms90qp7tpadcfhl4fcpqrbaco8.apps.googleusercontent.com',
+    iosBundleId: 'com.brenoitalo.agendai',
   );
 }

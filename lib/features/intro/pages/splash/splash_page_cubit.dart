@@ -1,12 +1,13 @@
+import 'package:agendai/core/device/app_package_info.dart';
+import 'package:agendai/core/device/app_preferences.dart';
+import 'package:agendai/core/di/di.dart';
+import 'package:agendai/core/firebase/remote_config/app_remote_config.dart';
+import 'package:agendai/core/helpers/result.dart';
+import 'package:agendai/features/auth/data/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'splash_page_actions.dart';
-import '../../../../core/device/app_package_info.dart';
-import '../../../../core/device/app_preferences.dart';
-import '../../../../core/di/di.dart';
-import '../../../../core/firebase/remote_config/app_remote_config.dart';
-import '../../../../core/helpers/result.dart';
-import '../../../auth/data/auth_repository.dart';
+
 part 'splash_page_state.dart';
 
 class SplashPageCubit extends Cubit<SplashPageState> {
@@ -37,7 +38,7 @@ class SplashPageCubit extends Cubit<SplashPageState> {
     ]);
 
     final appStatus = results[0];
-    // print(results[0]);
+
     if (appStatus == AppStatus.maintenance) {
       _actions?.navToMaintenance();
       return;
@@ -48,10 +49,10 @@ class SplashPageCubit extends Cubit<SplashPageState> {
     //Correct this issue later
     final shouldShowOnboarding = _appPreferences.shouldShowOnboarding;
 
-    // if (shouldShowOnboarding) {
-    //   _actions?.navToOnboarding();
-    //   return;
-    // }
+    if (shouldShowOnboarding) {
+      _actions?.navToOnboarding();
+      return;
+    }
 
     final hasLoggedUser = results[1];
     if (hasLoggedUser) {
@@ -79,6 +80,7 @@ class SplashPageCubit extends Cubit<SplashPageState> {
 
   Future<bool> _checkLoggedUser() async {
     final result = await _authRepository.validateToken();
+    print(result);
     return result is Success;
   }
 

@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:904880587175:ios:472a408247727fd70d7682",
-  "FIREBASE_PROJECT_ID": "ipancommerce",
-  "GCM_SENDER_ID": "904880587175"
+  "GOOGLE_APP_ID": "1:1021405538840:ios:886c2e54e419d66e9bf16d",
+  "FIREBASE_PROJECT_ID": "app-agendai",
+  "GCM_SENDER_ID": "1021405538840"
 }
