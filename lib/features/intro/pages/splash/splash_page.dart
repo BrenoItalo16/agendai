@@ -25,23 +25,26 @@ class _SplashPageState extends State<SplashPage> implements SplashPageActions {
 
   @override
   Widget build(BuildContext context) {
+    AppTheme t = context.watch();
     final appHeight = MediaQuery.of(context).size.height;
     final appWidth = MediaQuery.of(context).size.width;
     return BlocProvider.value(
       value: cubit,
       child: Scaffold(
+        backgroundColor: t.white,
         body: Center(
           //? Splash rive
           child: Stack(
             children: [
-              const RiveAnimation.asset('assets/rive/animated_logo_1.riv'),
+              const RiveAnimation.asset('assets/rive/animated_logo.riv'),
               Positioned(
                 right: 0,
                 top: appHeight / 2 - (appWidth / 6) + (appWidth * 0.45),
                 child: Container(
                   height: appWidth / 5,
                   width: appWidth / 2.2,
-                  color: AppTheme().white,
+                  color: t.white,
+                  // color: AppTheme().white,
                 ),
               ),
             ],
