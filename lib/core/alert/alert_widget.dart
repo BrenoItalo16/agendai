@@ -84,8 +84,8 @@ class _AlertWidgetState extends State<AlertWidget>
                 ),
                 Icon(
                   switch (widget.alert.type) {
-                    AlertType.error => IconlyLight.tick_square,
-                    AlertType.success => IconlyLight.close_square,
+                    AlertType.error => IconlyLight.danger,
+                    AlertType.success => IconlyLight.tick_square,
                   },
                   color: switch (widget.alert.type) {
                     AlertType.error => t.white,
