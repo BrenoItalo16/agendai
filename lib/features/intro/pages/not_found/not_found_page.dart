@@ -31,7 +31,10 @@ class NotFoundPage extends StatelessWidget {
                 label: 'Voltar',
                 onPressed: () {
                   getIt<AlertAreaCubit>().showAlert(
-                    Alert.success(title: 'Este é um alerta legal! $count'),
+                    Alert.success(title: 'Este é um alerta de sucesso! $count'),
+                  );
+                  getIt<AlertAreaCubit>().showAlert(
+                    Alert.error(title: 'Este é um alerta de erro! $count'),
                   );
                   count++;
                 },

@@ -1,6 +1,8 @@
 import 'package:agendai/core/alert/alert_area_cubit.dart';
 import 'package:agendai/core/di/di.dart';
+import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 
 class AlertWidget extends StatefulWidget {
@@ -51,6 +53,8 @@ class _AlertWidgetState extends State<AlertWidget>
 
   @override
   Widget build(BuildContext context) {
+    final AppTheme t = context.watch();
+
     return AnimatedBuilder(
       animation: _controller,
       builder: (_, __) {
@@ -59,16 +63,34 @@ class _AlertWidgetState extends State<AlertWidget>
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Colors.green,
+              color: switch (widget.alert.type) {
+                AlertType.error => t.red,
+                AlertType.success => t.green,
+              },
             ),
             padding: const EdgeInsets.all(24),
             child: Row(
               children: [
                 Expanded(
-                  child: Text(widget.alert.title),
+                  child: Text(
+                    widget.alert.title,
+                    style: TextStyle(
+                      color: switch (widget.alert.type) {
+                        AlertType.error => t.white,
+                        AlertType.success => t.black,
+                      },
+                    ),
+                  ),
                 ),
-                const Icon(
-                  IconlyLight.tick_square,
+                Icon(
+                  switch (widget.alert.type) {
+                    AlertType.error => IconlyLight.tick_square,
+                    AlertType.success => IconlyLight.close_square,
+                  },
+                  color: switch (widget.alert.type) {
+                    AlertType.error => t.white,
+                    AlertType.success => t.black,
+                  },
                 ),
               ],
             ),
