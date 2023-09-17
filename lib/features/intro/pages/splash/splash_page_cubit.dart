@@ -3,7 +3,7 @@ import 'package:agendai/core/device/app_preferences.dart';
 import 'package:agendai/core/di/di.dart';
 import 'package:agendai/core/firebase/remote_config/app_remote_config.dart';
 import 'package:agendai/core/helpers/result.dart';
-import 'package:agendai/features/auth/data/auth_repository.dart';
+import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'splash_page_actions.dart';
@@ -16,11 +16,11 @@ class SplashPageCubit extends Cubit<SplashPageState> {
     AppRemoteConfig? appRemoteConfig,
     AppPackageInfo? appPackageInfo,
     AppPreferences? appPreferences,
-    AuthRepository? authRepository,
+    SessionCubit? sessionCubit,
   })  : _appRemoteConfig = appRemoteConfig ?? getIt(),
         _appPackageInfo = appPackageInfo ?? getIt(),
         _appPreferences = appPreferences ?? getIt(),
-        _authRepository = authRepository ?? getIt(),
+        _sessionCubit = sessionCubit ?? getIt(),
         super(const SplashPageState());
 
   SplashPageActions? _actions;
@@ -28,7 +28,7 @@ class SplashPageCubit extends Cubit<SplashPageState> {
   final AppRemoteConfig _appRemoteConfig;
   final AppPackageInfo _appPackageInfo;
   final AppPreferences _appPreferences;
-  final AuthRepository _authRepository;
+  final SessionCubit _sessionCubit;
 
   Future<void> initialize() async {
     final results = await Future.wait([
@@ -79,8 +79,7 @@ class SplashPageCubit extends Cubit<SplashPageState> {
   }
 
   Future<bool> _checkLoggedUser() async {
-    final result = await _authRepository.validateToken();
-    print(result);
+    final result = await _sessionCubit.validateToken();
     return result is Success;
   }
 

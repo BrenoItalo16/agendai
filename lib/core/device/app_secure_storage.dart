@@ -1,6 +1,8 @@
 import 'package:agendai/core/device/app_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+enum AppSecureStoraKeys { sessionToken }
+
 class AppSecureStorage {
   AppSecureStorage(this._secureStorage);
 
@@ -15,5 +17,10 @@ class AppSecureStorage {
       key: AppSecureStorageKeys.sessionToken.name,
       value: token,
     );
+  }
+
+  Future<void> deleteSessionToken() {
+    //TODO: Chamar B4A para invalidar Sessão.
+    return _secureStorage.delete(key: AppSecureStorageKeys.sessionToken.name);
   }
 }

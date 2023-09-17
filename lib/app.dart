@@ -1,6 +1,7 @@
 import 'package:agendai/core/alert/alert_area.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/utils/no_glow_behavior.dart';
+import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,33 +47,36 @@ class _AppState extends State<App> {
     final t = AppTheme();
     return RepositoryProvider.value(
       value: t,
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: router,
-        theme: ThemeData.light().copyWith(
-          colorScheme: ThemeData.light().colorScheme.copyWith(
-                background: Colors.white,
-              ),
-          //? Customize field info
-          textSelectionTheme: TextSelectionThemeData(
-            cursorColor: t.primary,
-            selectionHandleColor: t.primary,
-            selectionColor: t.primary.withOpacity(0.4),
-          ),
-        ),
-        locale: DevicePreview.locale(context),
-        builder: (context, child) {
-          final newChild = ScrollConfiguration(
-            behavior: NoGlowBehavior(),
-            child: Stack(
-              children: [
-                if (child != null) child,
-                const AlertArea(),
-              ],
+      child: BlocProvider.value(
+        value: getIt<SessionCubit>(),
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+          theme: ThemeData.light().copyWith(
+            colorScheme: ThemeData.light().colorScheme.copyWith(
+                  background: Colors.white,
+                ),
+            //? Customize field info
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: t.primary,
+              selectionHandleColor: t.primary,
+              selectionColor: t.primary.withOpacity(0.4),
             ),
-          );
-          return DevicePreview.appBuilder(context, newChild);
-        },
+          ),
+          locale: DevicePreview.locale(context),
+          builder: (context, child) {
+            final newChild = ScrollConfiguration(
+              behavior: NoGlowBehavior(),
+              child: Stack(
+                children: [
+                  if (child != null) child,
+                  const AlertArea(),
+                ],
+              ),
+            );
+            return DevicePreview.appBuilder(context, newChild);
+          },
+        ),
       ),
     );
   }

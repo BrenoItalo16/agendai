@@ -76,7 +76,7 @@ class _SplashPageState extends State<SplashPage> implements SplashPageActions {
 
   @override
   void navToHome() {
-    context.go('/alterar esta rota'); //TODO: Alterar esta rota para "home".
+    context.go(AppRoutes.home);
   }
 
   @override

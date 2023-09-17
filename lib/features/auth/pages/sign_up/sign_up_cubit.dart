@@ -1,7 +1,7 @@
 import 'package:agendai/core/alert/alert_area_cubit.dart';
 import 'package:agendai/core/di/di.dart';
 import 'package:agendai/core/helpers/result.dart';
-import 'package:agendai/features/auth/data/auth_repository.dart';
+import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:agendai/features/auth/models/cellphone.dart';
 import 'package:agendai/features/auth/models/cpf.dart';
 import 'package:agendai/features/auth/models/email.dart';
@@ -17,14 +17,14 @@ part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit(this._actions,
-      {AuthRepository? authRepository, AlertAreaCubit? alertAreaCubit})
-      : _authRepository = authRepository ?? getIt(),
+      {SessionCubit? sessionCubit, AlertAreaCubit? alertAreaCubit})
+      : _sessionCubit = sessionCubit ?? getIt(),
         _alertAreaCubit = alertAreaCubit ?? getIt(),
         super(const SignUpState.empty());
 
   final SignUpActions _actions;
 
-  final AuthRepository _authRepository;
+  final SessionCubit _sessionCubit;
   final AlertAreaCubit _alertAreaCubit;
 
   void onFullNameChanged(String s) {
@@ -50,7 +50,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   Future<void> onSignUpPressed() async {
     emit(state.copyWith(isLoading: true));
 
-    final result = await _authRepository.signUp(
+    final result = await _sessionCubit.signUp(
       SignUpDto(
         fullName: state.fullName.value,
         cpf: state.cpf.value,

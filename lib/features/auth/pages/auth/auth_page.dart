@@ -50,7 +50,7 @@ class AuthPage extends StatelessWidget {
               AppTextButton(
                 color: t.primary,
                 label: 'Entrar como visitante',
-                onPressed: () {},
+                onPressed: () => context.push(AppRoutes.home),
               ),
             ],
           ),

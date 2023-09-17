@@ -1,8 +1,8 @@
 import 'package:agendai/core/alert/alert_area_cubit.dart';
 import 'package:agendai/core/di/di.dart';
 import 'package:agendai/core/helpers/result.dart';
-import 'package:agendai/features/auth/data/auth_repository.dart';
 import 'package:agendai/features/auth/data/results/login_failed.dart';
+import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:agendai/features/auth/models/email.dart';
 import 'package:agendai/features/auth/models/password.dart';
 import 'package:agendai/features/auth/pages/login/login_page_actions.dart';
@@ -15,19 +15,19 @@ part 'login_page_state.dart';
 
 class LoginPageCubit extends Cubit<LoginPageState> {
   LoginPageCubit(this._actions,
-      {AuthRepository? authRepository, AlertAreaCubit? alertAreaCubit})
-      : _authRepository = authRepository ?? getIt(),
+      {SessionCubit? sessionCubit, AlertAreaCubit? alertAreaCubit})
+      : _sessionCubit = sessionCubit ?? getIt(),
         _alertAreaCubit = alertAreaCubit ?? getIt(),
         super(const LoginPageState.empty());
 
   final LoginPageActions _actions;
-  final AuthRepository _authRepository;
+  final SessionCubit _sessionCubit;
   final AlertAreaCubit _alertAreaCubit;
 
   Future<void> onLoginPressed() async {
     emit(state.copyWith(isLoading: true));
 
-    final result = await _authRepository.login(
+    final result = await _sessionCubit.login(
       email: state.email.value,
       password: state.password.value,
     );

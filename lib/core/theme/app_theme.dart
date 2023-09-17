@@ -37,6 +37,17 @@ class AppTheme {
     fontWeight: FontWeight.bold,
   );
 
+  late final heading20 = TextStyle(
+    fontSize: 20,
+    color: txtColor,
+  );
+
+  late final heading20Bold = TextStyle(
+    fontSize: 20,
+    color: txtColor,
+    fontWeight: FontWeight.bold,
+  );
+
   late final heading36 = TextStyle(
     fontSize: 36,
     color: txtColor,
