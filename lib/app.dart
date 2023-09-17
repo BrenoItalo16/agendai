@@ -1,7 +1,9 @@
 import 'package:agendai/core/alert/alert_area.dart';
 import 'package:agendai/core/theme/app_theme.dart';
+import 'package:agendai/core/utils/no_glow_behavior.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/di.dart';
 import 'core/flavor/flavor_config.dart';
@@ -18,6 +20,9 @@ Future<void> bootstrap(FlavorConfig config) async {
 
   await configureDependencies(config);
   // await Future.delayed(const Duration(seconds: 4));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   runApp(
     DevicePreview(
@@ -38,8 +43,9 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (_) => AppTheme(),
+    final t = AppTheme();
+    return RepositoryProvider.value(
+      value: t,
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: router,
@@ -47,14 +53,23 @@ class _AppState extends State<App> {
           colorScheme: ThemeData.light().colorScheme.copyWith(
                 background: Colors.white,
               ),
+          //? Customize field info
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: t.primary,
+            selectionHandleColor: t.primary,
+            selectionColor: t.primary.withOpacity(0.4),
+          ),
         ),
         locale: DevicePreview.locale(context),
         builder: (context, child) {
-          final newChild = Stack(
-            children: [
-              if (child != null) child,
-              const AlertArea(),
-            ],
+          final newChild = ScrollConfiguration(
+            behavior: NoGlowBehavior(),
+            child: Stack(
+              children: [
+                if (child != null) child,
+                const AlertArea(),
+              ],
+            ),
           );
           return DevicePreview.appBuilder(context, newChild);
         },

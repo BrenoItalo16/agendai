@@ -1,16 +1,16 @@
-import 'package:agendai/core/alert/alert_area_cubit.dart';
-import 'package:agendai/core/di/di.dart';
+import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_text_button.dart';
 import 'package:agendai/features/intro/widgets/intro_base_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class NotFoundPage extends StatelessWidget {
-  NotFoundPage({Key? key}) : super(key: key);
-
-  int count = 0;
+  const NotFoundPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    AppTheme t = context.watch();
     return Scaffold(
       body: Column(
         children: [
@@ -28,16 +28,9 @@ class NotFoundPage extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: AppTextButton(
+                color: t.primary,
                 label: 'Voltar',
-                onPressed: () {
-                  getIt<AlertAreaCubit>().showAlert(
-                    Alert.success(title: 'Este é um alerta de sucesso! $count'),
-                  );
-                  getIt<AlertAreaCubit>().showAlert(
-                    Alert.error(title: 'Este é um alerta de erro! $count'),
-                  );
-                  count++;
-                },
+                onPressed: context.pop,
               ),
             ),
           )

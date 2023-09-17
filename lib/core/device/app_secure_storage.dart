@@ -1,3 +1,4 @@
+import 'package:agendai/core/device/app_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AppSecureStorage {
@@ -6,7 +7,13 @@ class AppSecureStorage {
   final FlutterSecureStorage _secureStorage;
 
   Future<String?> getSessionToken() {
-    return Future.value('r:23eddd12fed9e7f22116e8a33bc66f78');
-    // return _secureStorage.read(key: 'sessionToken');
+    return _secureStorage.read(key: AppSecureStorageKeys.sessionToken.name);
+  }
+
+  Future<void> saveSessionToken(String token) {
+    return _secureStorage.write(
+      key: AppSecureStorageKeys.sessionToken.name,
+      value: token,
+    );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:agendai/features/auth/data/results/sign_up_failed.dart';
+import 'package:agendai/features/auth/models/sign_up_dto.dart';
 import 'package:dio/dio.dart';
 import '../../../core/helpers/result.dart';
 import '../models/user.dart';
@@ -8,6 +10,8 @@ abstract class AuthDatasource {
   Future<Result<LoginFailed, User>> login(
       {required String email, required String password});
   Future<Result<ValidateTokenFailed, User>> validateToken(String token);
+
+  Future<Result<SignUpFailed, User>> signUp(SignUpDto signUpDto);
 }
 
 class RemoteAuthDatasource implements AuthDatasource {
@@ -24,7 +28,7 @@ class RemoteAuthDatasource implements AuthDatasource {
         'password': password,
       });
 
-      return Success(User.fromMap(response.data['result']));
+      return Success(User.fromJson(response.data['result']));
     } on DioException catch (e) {
       if (e.type == DioExceptionType.unknown) {
         return const Failure(LoginFailed.offline);
@@ -34,6 +38,17 @@ class RemoteAuthDatasource implements AuthDatasource {
       return const Failure(LoginFailed.unknownError);
     } catch (_) {
       return const Failure(LoginFailed.unknownError);
+    }
+  }
+
+  @override
+  Future<Result<SignUpFailed, User>> signUp(SignUpDto signUpDto) async {
+    try {
+      final response = await _dio.post('/v1-sign-up', data: signUpDto.toJson());
+
+      return Success(User.fromJson(response.data['result']));
+    } catch (_) {
+      return const Failure(SignUpFailed.unknownError);
     }
   }
 
@@ -49,7 +64,7 @@ class RemoteAuthDatasource implements AuthDatasource {
         ),
       );
 
-      return Success(User.fromMap(response.data['result']));
+      return Success(User.fromJson(response.data['result']));
     } on DioException {
       return const Failure(ValidateTokenFailed.invalidToken);
     } catch (_) {

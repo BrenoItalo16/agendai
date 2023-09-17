@@ -7,10 +7,12 @@ class AppTextButton extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
+    this.color,
   });
 
   final String label;
   final VoidCallback onPressed;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class AppTextButton extends StatelessWidget {
           if (states.contains(MaterialState.pressed)) {
             return t.lightGrey;
           }
-          return t.primary;
+          return color ?? t.primary;
         }),
         minimumSize: MaterialStateProperty.all(const Size(100, 56)),
         shape: MaterialStateProperty.all(
