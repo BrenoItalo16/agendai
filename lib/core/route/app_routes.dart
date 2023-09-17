@@ -1,4 +1,5 @@
 import 'package:agendai/features/auth/pages/auth/auth_page.dart';
+import 'package:agendai/features/auth/pages/login/login_page.dart';
 import 'package:agendai/features/auth/pages/sign_up/sign_up_page.dart';
 import 'package:agendai/features/intro/pages/force_update/force_update_page.dart';
 import 'package:agendai/features/intro/pages/maintenance/maintenance_page.dart';
@@ -31,6 +32,10 @@ final router = GoRouter(
             path: AppRoutes.signup.path,
             builder: (context, state) => const SignUpPage(),
           ),
+          GoRoute(
+            path: AppRoutes.login.path,
+            builder: (context, state) => const LoginPage(),
+          ),
         ]),
     GoRoute(
       path: AppRoutes.maintenance,
@@ -50,8 +55,15 @@ class AppRoutes {
   static const String maintenance = '/maintenance';
   static const String forceUpdate = '/force-update';
   static const String home = '/home';
-  static const AppRoute signup =
-      AppRoute(fullpath: '/auth/sign-up', path: 'sign-up');
+
+  static const AppRoute signup = AppRoute(
+    fullpath: '/auth/sign-up',
+    path: 'sign-up',
+  );
+  static const AppRoute login = AppRoute(
+    fullpath: '/auth/login',
+    path: 'login',
+  );
 }
 
 class AppRoute {
