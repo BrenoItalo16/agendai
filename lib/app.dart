@@ -6,6 +6,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/di/di.dart';
 import 'core/flavor/flavor_config.dart';
 import 'core/route/app_routes.dart';
@@ -52,7 +53,16 @@ class _AppState extends State<App> {
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           routerConfig: router,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('pt', 'BR'),
+          ],
           theme: ThemeData.light().copyWith(
+            scaffoldBackgroundColor: t.white,
             colorScheme: ThemeData.light().colorScheme.copyWith(
                   background: Colors.white,
                 ),

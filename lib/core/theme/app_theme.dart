@@ -14,6 +14,18 @@ class AppTheme {
   final txtColor = const Color(0xff0D3F67);
 
   // Body and title
+  late final body13 = TextStyle(
+    fontSize: 13,
+    color: txtColor,
+  );
+
+  late final body13Bold = TextStyle(
+    fontSize: 13,
+    color: txtColor,
+    fontWeight: FontWeight.bold,
+  );
+
+  // Body and title
   late final title16 = TextStyle(
     fontSize: 16,
     color: txtColor,
@@ -35,6 +47,17 @@ class AppTheme {
     fontSize: 16,
     color: txtColor,
     fontWeight: FontWeight.bold,
+  );
+
+  late final body18Bold = TextStyle(
+    fontSize: 18,
+    color: txtColor,
+    fontWeight: FontWeight.bold,
+  );
+
+  late final body18 = TextStyle(
+    fontSize: 18,
+    color: txtColor,
   );
 
   late final heading20 = TextStyle(

@@ -11,6 +11,8 @@ import 'package:agendai/core/helpers/token_interceptor.dart';
 import 'package:agendai/features/auth/data/auth_datasource.dart';
 import 'package:agendai/features/auth/data/auth_repository.dart';
 import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
+import 'package:agendai/features/scheduling/data/scheduling_datasource.dart';
+import 'package:agendai/features/scheduling/data/scheduling_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -52,6 +54,9 @@ Future<void> configureDependencies(FlavorConfig config) async {
 
   getIt.registerFactory<AuthDatasource>(() => RemoteAuthDatasource(getIt()));
   getIt.registerLazySingleton(() => AuthRepository(getIt(), getIt()));
+
+  getIt.registerFactory(() => SchedulingDatasource(getIt()));
+  getIt.registerLazySingleton(() => SchedulingRepository(getIt()));
 
   getIt.registerLazySingleton(() => FirebaseCrashlytics.instance);
   getIt.registerSingleton(AppCrashlytics(getIt()));
