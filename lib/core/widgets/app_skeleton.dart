@@ -1,20 +1,19 @@
 import 'package:agendai/core/theme/app_theme.dart';
+import 'package:agendai/core/widgets/base/app_stateless.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
-class AppSkeleton extends StatelessWidget {
+class AppSkeleton extends AppStateless {
   const AppSkeleton({super.key, this.width, this.child});
 
   final double? width;
   final Widget? child;
 
   @override
-  Widget build(BuildContext context) {
-    final AppTheme t = context.watch();
+  Widget builder(BuildContext context, AppTheme theme) {
     return Shimmer.fromColors(
-      baseColor: t.grey.withOpacity(0.3),
-      highlightColor: t.white,
+      baseColor: theme.grey.withOpacity(0.3),
+      highlightColor: theme.white,
       child: child ??
           Container(
             width: width,
