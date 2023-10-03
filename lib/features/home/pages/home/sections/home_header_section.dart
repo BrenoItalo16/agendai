@@ -23,7 +23,7 @@ class HomeHeaderSection extends StatelessWidget {
                   sessionCubit.logout();
                 } else {
                   sessionCubit.login(
-                      email: 'email aqui', password: 'senha aqui');
+                      email: 'contato@brenoitalo.com', password: '12345678');
                 }
               },
               // onPressed: context.read<SessionCubit>().logout,

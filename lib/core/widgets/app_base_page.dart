@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconly/iconly.dart';
-
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import 'app_icon_button.dart';
+
+enum AppBasePageType { fixed, scroll }
 
 class AppBasePage extends StatefulWidget {
   const AppBasePage({
@@ -18,12 +18,16 @@ class AppBasePage extends StatefulWidget {
     required this.body,
     this.bodyPadding = const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
     this.isLoading = false,
+    this.type = AppBasePageType.scroll,
+    this.bottomAction,
   }) : super(key: key);
 
   final String title;
   final Widget body;
   final EdgeInsets bodyPadding;
   final bool isLoading;
+  final AppBasePageType type;
+  final Widget? bottomAction;
 
   @override
   State<AppBasePage> createState() => _AppBasePageState();
@@ -63,18 +67,17 @@ class _AppBasePageState extends State<AppBasePage>
         onTap: FocusScope.of(context).unfocus,
         child: Stack(
           children: [
-            SingleChildScrollView(
-              padding: EdgeInsets.only(
-                top: MediaQuery.paddingOf(context).top +
-                    80 +
-                    widget.bodyPadding.top,
-                bottom: MediaQuery.paddingOf(context).bottom +
-                    widget.bodyPadding.bottom,
-                left: widget.bodyPadding.left,
-                right: widget.bodyPadding.right,
-              ),
-              child: widget.body,
-            ),
+            if (widget.type == AppBasePageType.scroll)
+              SingleChildScrollView(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.paddingOf(context).top + 64,
+                  bottom: MediaQuery.paddingOf(context).bottom +
+                      (widget.bottomAction != null ? 80 : 0),
+                ).add(widget.bodyPadding),
+                child: widget.body,
+              )
+            else
+              widget.body,
             if (widget.isLoading)
               Positioned.fill(
                 child: AbsorbPointer(
@@ -142,6 +145,28 @@ class _AppBasePageState extends State<AppBasePage>
                 ),
               ),
             ),
+            if (widget.bottomAction != null)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.white.withOpacity(0.0),
+                        Colors.white,
+                        Colors.white,
+                      ],
+                      stops: const [0, 0.5, 1],
+                    ),
+                  ),
+                  child: widget.bottomAction!,
+                ),
+              )
           ],
         ),
       ),

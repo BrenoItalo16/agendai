@@ -1,7 +1,7 @@
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_card.dart';
+import 'package:agendai/core/widgets/app_session_observer.dart';
 import 'package:agendai/core/widgets/app_skeleton.dart';
-import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:agendai/features/home/pages/home/sections/next_schedules/home_next_schedules_cubit.dart';
 import 'package:agendai/features/home/pages/home/sections/next_schedules/widgets/home_next_schedule_item.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +18,6 @@ class HomeNextSchedulesSection extends StatefulWidget {
 class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
   final HomeNextSchedulesCubit cubit = HomeNextSchedulesCubit();
 
-  @override
-  void initState() {
-    super.initState();
-
-    final SessionCubit sessionCubit = context.read();
-    loadingSchedulings(sessionCubit.state.loggedUser != null);
-  }
-
   void loadingSchedulings(bool isLoggedIn) {
     if (isLoggedIn) {
       cubit.loadSchedulings();
@@ -38,14 +30,9 @@ class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
   Widget build(BuildContext context) {
     AppTheme t = context.watch();
 
-    return BlocListener<SessionCubit, SessionState>(
-      listener: (context, state) {
-        loadingSchedulings(state.loggedUser != null);
-        if (state.loggedUser != null) {
-          cubit.loadSchedulings();
-        } else {
-          cubit.setUserNotLoggedIn();
-        }
+    return AppSessionObserver(
+      listener: (sessionState) {
+        loadingSchedulings(sessionState.loggedUser != null);
       },
       child: BlocProvider.value(
         value: cubit,
@@ -69,6 +56,7 @@ class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
                   builder: (context, state) {
                     return switch (state.status) {
                       HomeNextSchedulesStatus.loading => AppSkeleton(
+                          margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                           child: OverflowBox(
                             maxWidth: 600,
                             alignment: Alignment.bottomLeft,

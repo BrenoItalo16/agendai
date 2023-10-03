@@ -8,11 +8,13 @@ class AppOutlinedButton extends StatefulWidget {
     required this.label,
     required this.onPressed,
     this.icon,
+    this.minHeight = 56,
   });
 
   final String label;
   final VoidCallback? onPressed;
   final IconData? icon;
+  final double minHeight;
 
   @override
   State<AppOutlinedButton> createState() => _AppOutlinedButtonState();
@@ -37,7 +39,7 @@ class _AppOutlinedButtonState extends State<AppOutlinedButton> {
             }
             return BorderSide(color: t.primary, width: 2);
           }),
-          minimumSize: MaterialStateProperty.all(const Size(128, 56)),
+          minimumSize: MaterialStateProperty.all(Size(128, widget.minHeight)),
           textStyle: MaterialStateProperty.all(
             const TextStyle(
               fontSize: 16,
@@ -56,12 +58,9 @@ class _AppOutlinedButtonState extends State<AppOutlinedButton> {
       child: Row(
         children: [
           const SizedBox(width: 24),
-          Expanded(
-            child: Center(
-              child: Text(
-                widget.label,
-                overflow: TextOverflow.ellipsis,
-              ),
+          Center(
+            child: Text(
+              widget.label,
             ),
           ),
           Icon(

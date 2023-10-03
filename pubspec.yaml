@@ -64,6 +64,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   shimmer: ^3.0.0
   intl:
+  cached_network_image: ^3.3.0
   flutter_localizations:
     sdk: flutter
 

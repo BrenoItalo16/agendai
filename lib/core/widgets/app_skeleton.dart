@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AppSkeleton extends AppStateless {
-  const AppSkeleton({super.key, this.width, this.child});
+  const AppSkeleton(
+      {super.key, this.width, this.height, this.child, this.margin});
 
   final double? width;
+  final double? height;
   final Widget? child;
+  final EdgeInsets? margin;
 
   @override
   Widget builder(BuildContext context, AppTheme theme) {
@@ -17,10 +20,11 @@ class AppSkeleton extends AppStateless {
       child: child ??
           Container(
             width: width,
-            margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+            height: height,
+            margin: margin,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
-              color: Colors.amberAccent,
+              color: Colors.white,
             ),
           ),
     );

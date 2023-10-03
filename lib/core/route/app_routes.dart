@@ -7,6 +7,8 @@ import 'package:agendai/features/intro/pages/maintenance/maintenance_page.dart';
 import 'package:agendai/features/intro/pages/not_found/not_found_page.dart';
 import 'package:agendai/features/intro/pages/onboarding/onboarding_page.dart';
 import 'package:agendai/features/intro/pages/splash/splash_page.dart';
+import 'package:agendai/features/professional/pages/professional_details/professional_details_page.dart';
+import 'package:agendai/features/professional/pages/professional_ratings/professional_ratings_page.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -50,6 +52,19 @@ final router = GoRouter(
       path: AppRoutes.home,
       builder: (context, state) => const HomePage(),
     ),
+    GoRoute(
+        path: AppRoutes.professionalDetails(id: ':id'),
+        builder: (context, state) => ProfessionalDetailsPage(
+              id: state.pathParameters['id']!,
+            ),
+        routes: [
+          GoRoute(
+            path: AppRoutes.professionalRatings.path,
+            builder: (context, state) => ProfessionalRatingsPage(
+              id: state.pathParameters['id']!,
+            ),
+          ),
+        ]),
   ],
 );
 
@@ -61,6 +76,9 @@ class AppRoutes {
   static const String forceUpdate = '/force-update';
   static const String home = '/home';
 
+  static String professionalDetails({required String id}) =>
+      '/professionals/$id';
+
   static const AppRoute signup = AppRoute(
     fullpath: '/auth/sign-up',
     path: 'sign-up',
@@ -69,11 +87,25 @@ class AppRoutes {
     fullpath: '/auth/login',
     path: 'login',
   );
+
+  static AppRoutesWithId professionalRatings = AppRoutesWithId(
+    path: 'ratings',
+    buildFullPath: (id) => '/professionals/$id/ratings',
+  );
 }
 
 class AppRoute {
+  const AppRoute({required this.fullpath, required this.path});
+
   final String fullpath;
   final String path;
+}
 
-  const AppRoute({required this.fullpath, required this.path});
+class AppRoutesWithId {
+  const AppRoutesWithId({required this.path, required this.buildFullPath});
+
+  final String path;
+  final Function(String id) buildFullPath;
+
+  String fullPath({required String id}) => buildFullPath(id);
 }

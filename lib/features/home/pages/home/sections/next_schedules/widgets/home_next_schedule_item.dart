@@ -1,8 +1,10 @@
+import 'package:agendai/core/route/app_routes.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_card.dart';
 import 'package:agendai/features/scheduling/models/scheduling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 
@@ -15,7 +17,11 @@ class HomeNextScheduleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppTheme t = context.watch();
     return AppCard(
-      onPressed: () {},
+      onPressed: () {
+        context.push(
+          AppRoutes.professionalDetails(id: scheduling.professional.id),
+        );
+      },
       child: Row(
         children: [
           Expanded(
