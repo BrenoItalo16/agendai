@@ -1,7 +1,7 @@
 import 'package:agendai/features/auth/pages/auth/auth_page.dart';
 import 'package:agendai/features/auth/pages/login/login_page.dart';
 import 'package:agendai/features/auth/pages/sign_up/sign_up_page.dart';
-import 'package:agendai/features/home/pages/home/home_page.dart';
+import 'package:agendai/features/home/pages/base/base_page.dart';
 import 'package:agendai/features/intro/pages/force_update/force_update_page.dart';
 import 'package:agendai/features/intro/pages/maintenance/maintenance_page.dart';
 import 'package:agendai/features/intro/pages/not_found/not_found_page.dart';
@@ -50,7 +50,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.home,
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => const BasePage(),
     ),
     GoRoute(
         path: AppRoutes.professionalDetails(id: ':id'),

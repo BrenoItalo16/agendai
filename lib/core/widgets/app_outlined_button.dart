@@ -59,13 +59,9 @@ class _AppOutlinedButtonState extends State<AppOutlinedButton> {
         children: [
           const SizedBox(width: 24),
           Center(
-            child: Text(
-              widget.label,
-            ),
+            child: Text(widget.label),
           ),
-          Icon(
-            widget.icon,
-          ),
+          Icon(widget.icon),
         ],
       ),
     );
