@@ -12,9 +12,9 @@ class HomeHeaderSection extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Align(
-          alignment: Alignment.topLeft,
+          alignment: Alignment.centerLeft,
           child: BlocBuilder<SessionCubit, SessionState>(
             builder: (context, state) {
               return Text(
