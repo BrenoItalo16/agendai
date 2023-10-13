@@ -28,8 +28,6 @@ class OnboardingPageCubit extends Cubit<OnboardingPageState> {
   Future<void> initialize() async {
     final locationStatus = await _appLocation.checkStatus();
     final messagingStatus = await _appMessaging.checkStatus();
-    print(locationStatus);
-    print(messagingStatus);
 
     emit(OnboardingPageState(
       showNotificationPage: [

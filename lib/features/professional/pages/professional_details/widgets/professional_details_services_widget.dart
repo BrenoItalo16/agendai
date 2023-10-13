@@ -9,13 +9,13 @@ class ProfessionalDetailsServicesWidget extends AppStateless {
 
   final ProfessionalDetails professional;
   @override
-  Widget builder(BuildContext context, AppTheme t) {
+  Widget builder(BuildContext context, AppTheme theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Serviços',
-          style: t.body18Bold,
+          style: theme.body18Bold,
         ),
         for (final s in professional.services)
           Padding(
@@ -27,11 +27,11 @@ class ProfessionalDetailsServicesWidget extends AppStateless {
                   height: 8,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: t.secondary,
+                    color: theme.secondary,
                   ),
                 ),
                 const SizedBox(width: 8),
-                Expanded(child: Text(s.name, style: t.body16)),
+                Expanded(child: Text(s.name, style: theme.body16)),
               ],
             ),
           ),

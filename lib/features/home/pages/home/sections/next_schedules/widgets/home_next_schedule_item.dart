@@ -1,6 +1,7 @@
 import 'package:agendai/core/route/app_routes.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_card.dart';
+import 'package:agendai/core/widgets/app_chip.dart';
 import 'package:agendai/features/scheduling/models/scheduling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,19 +29,8 @@ class HomeNextScheduleItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    color: t.primary.withOpacity(0.1),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4,
-                    horizontal: 10,
-                  ),
-                  child: Text(
-                    DateFormat('dd MMM HH:mm').format(scheduling.startDate),
-                    style: t.label12Bold.copyWith(color: t.primary),
-                  ),
+                AppChip(
+                  text: DateFormat('dd MMM HH:mm').format(scheduling.startDate),
                 ),
                 Expanded(
                   child: Align(
@@ -53,7 +43,7 @@ class HomeNextScheduleItem extends StatelessWidget {
                 ),
                 Text(
                   scheduling.professional.name,
-                  style: t.body13.copyWith(color: t.grey),
+                  style: t.body13.copyWith(color: t.txtColor),
                 ),
               ],
             ),

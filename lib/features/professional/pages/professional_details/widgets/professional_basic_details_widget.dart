@@ -11,7 +11,7 @@ class ProfessionalBasicDetailsWidget extends AppStateless {
   final ProfessionalDetails professional;
 
   @override
-  Widget builder(BuildContext context, AppTheme t) {
+  Widget builder(BuildContext context, AppTheme theme) {
     return AppCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +22,7 @@ class ProfessionalBasicDetailsWidget extends AppStateless {
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: t.primary.withOpacity(0.1),
+                  color: theme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                   image: professional.picture != null
                       ? DecorationImage(
@@ -37,7 +37,7 @@ class ProfessionalBasicDetailsWidget extends AppStateless {
                     ? null
                     : Icon(
                         IconlyLight.profile,
-                        color: t.primary,
+                        color: theme.primary,
                       ),
               ),
               const SizedBox(width: 20),
@@ -47,31 +47,31 @@ class ProfessionalBasicDetailsWidget extends AppStateless {
                   children: [
                     Text(
                       professional.name,
-                      style: t.body16Bold,
+                      style: theme.body16Bold,
                     ),
                     const SizedBox(height: 3),
                     Row(
                       children: [
                         Icon(
                           IconlyBold.star,
-                          color: t.secondary,
+                          color: theme.secondary,
                           size: 18,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           professional.rating.toStringAsFixed(1),
-                          style: t.body16,
+                          style: theme.body16,
                         ),
                         Text(
                           ' (${professional.ratingCount.toString()})',
-                          style: t.body13,
+                          style: theme.body13,
                         ),
                       ],
                     ),
                     const SizedBox(height: 5),
                     Text(
                       'CRM: ${professional.crm}',
-                      style: t.label12,
+                      style: theme.label12,
                     ),
                   ],
                 ),
@@ -81,22 +81,22 @@ class ProfessionalBasicDetailsWidget extends AppStateless {
           const SizedBox(height: 32),
           Text(
             'Especialidades',
-            style: t.body16Bold,
+            style: theme.body16Bold,
           ),
           const SizedBox(height: 10),
           Text(
             professional.specialties.map((e) => e.name).join(' | '),
-            style: t.body16,
+            style: theme.body16,
           ),
           const SizedBox(height: 18),
           Text(
             'Convênios',
-            style: t.body16Bold,
+            style: theme.body16Bold,
           ),
           const SizedBox(height: 10),
           Text(
             professional.insurances.map((e) => e.name).join(' | '),
-            style: t.body16,
+            style: theme.body16,
           ),
         ],
       ),

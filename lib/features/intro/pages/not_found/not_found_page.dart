@@ -1,3 +1,4 @@
+import 'package:agendai/core/route/app_routes.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_text_button.dart';
 import 'package:agendai/features/intro/widgets/intro_base_page.dart';
@@ -30,7 +31,7 @@ class NotFoundPage extends StatelessWidget {
               child: AppTextButton(
                 color: t.primary,
                 label: 'Voltar',
-                onPressed: context.pop,
+                onPressed: () => context.go(AppRoutes.home),
               ),
             ),
           )
