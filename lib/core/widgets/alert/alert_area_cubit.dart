@@ -1,24 +1,20 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'alert_area_state.dart';
 
 class AlertAreaCubit extends Cubit<AlertAreaState> {
-  AlertAreaCubit() : super(AlertAreaState(number: Random().nextInt(10000000)));
+  AlertAreaCubit() : super(AlertAreaState());
 
   void showAlert(Alert alert) {
-    emit(AlertAreaState(
-        alerts: [alert, ...state.alerts], number: Random().nextInt(10000000)));
+    emit(AlertAreaState(alerts: [alert, ...state.alerts]));
   }
 
   void removeAlert(Alert alert) {
-    final alerts = state.alerts;
+    final alerts = List<Alert>.from(state.alerts);
     final index = alerts.indexOf(alert);
     alerts.removeAt(index);
-    emit(AlertAreaState(
-        alerts: [...alerts], number: Random().nextInt(10000000)));
+    emit(AlertAreaState(alerts: alerts));
   }
 }
 

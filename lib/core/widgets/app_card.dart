@@ -3,17 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppCard extends StatelessWidget {
-  const AppCard({super.key, this.onPressed, required this.child, this.width});
+  const AppCard({
+    super.key,
+    this.onPressed,
+    required this.child,
+    this.width,
+    this.shadowOffset = const Offset(8, 16),
+  });
 
   final VoidCallback? onPressed;
   final Widget child;
   final double? width;
+  final Offset shadowOffset;
 
   @override
   Widget build(BuildContext context) {
     final AppTheme t = context.watch();
     return Container(
-      margin: const EdgeInsets.only(bottom: 28),
+      margin: EdgeInsets.only(bottom: shadowOffset.dy * 2),
       width: width,
       // height: 120,
       decoration: BoxDecoration(
@@ -22,7 +29,7 @@ class AppCard extends StatelessWidget {
             color: t.shadow.withOpacity(0.08),
             spreadRadius: 0,
             blurRadius: 15,
-            offset: const Offset(8, 16), // changes position of shadow
+            offset: shadowOffset, // changes position of shadow
           ),
         ],
       ),

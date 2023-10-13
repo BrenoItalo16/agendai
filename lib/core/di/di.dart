@@ -1,4 +1,3 @@
-import 'package:agendai/core/alert/alert_area_cubit.dart';
 import 'package:agendai/core/device/app_device_settings.dart';
 import 'package:agendai/core/device/app_external_launcher.dart';
 import 'package:agendai/core/device/app_location.dart';
@@ -8,9 +7,12 @@ import 'package:agendai/core/firebase/messaging/app_messaging.dart';
 import 'package:agendai/core/firebase/remote_config/app_remote_config.dart';
 import 'package:agendai/core/flavor/flavor_config.dart';
 import 'package:agendai/core/helpers/token_interceptor.dart';
+import 'package:agendai/core/widgets/alert/alert_area_cubit.dart';
 import 'package:agendai/features/auth/data/auth_datasource.dart';
 import 'package:agendai/features/auth/data/auth_repository.dart';
 import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
+import 'package:agendai/features/home/pages/home/data/notifications_datasource.dart';
+import 'package:agendai/features/home/pages/home/data/notifications_repository.dart';
 import 'package:agendai/features/professional/data/professional_datasource.dart';
 import 'package:agendai/features/professional/data/professional_repository.dart';
 import 'package:agendai/features/scheduling/data/scheduling_datasource.dart';
@@ -62,6 +64,9 @@ Future<void> configureDependencies(FlavorConfig config) async {
 
   getIt.registerFactory(() => ProfessionalDatasource(getIt()));
   getIt.registerFactory(() => ProfessionalRepository(getIt()));
+
+  getIt.registerFactory(() => NotificationsDatasource(getIt()));
+  getIt.registerFactory(() => NotificationsRepository(getIt()));
 
   getIt.registerLazySingleton(() => FirebaseCrashlytics.instance);
   getIt.registerSingleton(AppCrashlytics(getIt()));

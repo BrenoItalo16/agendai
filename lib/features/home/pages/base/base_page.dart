@@ -1,5 +1,6 @@
 import 'package:agendai/features/home/home_page.dart';
 import 'package:agendai/features/home/pages/base/widgets/bottom_nav_bar.dart';
+import 'package:agendai/features/home/pages/notifications/notifications_page.dart';
 import 'package:flutter/material.dart';
 
 class BasePage extends StatefulWidget {
@@ -36,10 +37,10 @@ class _BasePageState extends State<BasePage> {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const HomePage(),
-          Container(color: Colors.red),
           Container(color: Colors.grey[200]),
-          Container(color: Colors.green),
-          Container(color: Colors.blue),
+          Container(color: Colors.grey[200]),
+          const NotificationsPage(),
+          Container(color: Colors.grey[200]),
         ],
       ),
     );

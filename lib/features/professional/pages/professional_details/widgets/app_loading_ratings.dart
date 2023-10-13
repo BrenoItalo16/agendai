@@ -8,7 +8,7 @@ class AppLoadingRatings extends AppStateless {
   const AppLoadingRatings({super.key});
 
   @override
-  Widget builder(BuildContext context, AppTheme t) {
+  Widget builder(BuildContext context, AppTheme theme) {
     return AppSkeleton(
       width: double.maxFinite,
       height: 100,

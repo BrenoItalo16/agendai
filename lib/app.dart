@@ -1,6 +1,6 @@
-import 'package:agendai/core/alert/alert_area.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/utils/no_glow_behavior.dart';
+import 'package:agendai/core/widgets/alert/alert_area.dart';
 import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
