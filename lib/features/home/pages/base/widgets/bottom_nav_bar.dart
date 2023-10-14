@@ -1,7 +1,7 @@
+import 'package:agendai/core/widgets/glassmorphism.dart';
 import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:glassmorphism/glassmorphism.dart';
 import 'package:iconly/iconly.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -105,32 +105,16 @@ class _BottomNavBarState extends State<BottomNavBar>
                 children: [
                   //?Começa aqui
                   Positioned(
-                    bottom: -36,
-                    child: GlassmorphicContainer(
-                      width: appWidth,
-                      height: 112,
-                      borderRadius: 36,
-                      blur: 8,
-                      border: 2,
-                      linearGradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          theme.white.withOpacity(0.4),
-                          theme.white.withOpacity(0.4),
-                        ],
-                      ),
-                      borderGradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          theme.white,
-                          theme.white,
-                        ],
+                    bottom: -10,
+                    child: Glassmorphism(
+                      blur: 7,
+                      opacity: 0.5,
+                      child: SizedBox(
+                        width: appWidth,
+                        height: 83,
                       ),
                     ),
                   ),
-
                   //!Termina aqui
                   AnimatedPositioned(
                     top: 10,
