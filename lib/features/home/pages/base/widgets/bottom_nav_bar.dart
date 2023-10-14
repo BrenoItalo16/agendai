@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:glassmorphism/glassmorphism.dart';
 import 'package:iconly/iconly.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -89,19 +90,48 @@ class _BottomNavBarState extends State<BottomNavBar>
     return SafeArea(
       top: false,
       child: SizedBox(
-        height: 88,
+        height: 82,
         child: Stack(
           children: [
             Container(
               margin: const EdgeInsets.only(top: 6),
-              decoration: BoxDecoration(
-                color: theme.white,
-                borderRadius: const BorderRadius.vertical(
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.vertical(
                   top: Radius.circular(36),
                 ),
               ),
               child: Stack(
                 children: [
+                  //?Começa aqui
+                  Positioned(
+                    bottom: -36,
+                    child: GlassmorphicContainer(
+                      width: appWidth,
+                      height: 112,
+                      borderRadius: 36,
+                      blur: 8,
+                      border: 2,
+                      linearGradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          theme.white.withOpacity(0.4),
+                          theme.white.withOpacity(0.4),
+                        ],
+                      ),
+                      borderGradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          theme.white,
+                          theme.white,
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  //!Termina aqui
                   AnimatedPositioned(
                     top: 10,
                     left: w * (widget.page + 1) + widget.page * 56,
@@ -152,25 +182,6 @@ class _BottomNavBarState extends State<BottomNavBar>
                             ),
                           )
                       ],
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      height: 80,
-                      width: appWidth / 4.2,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Colors.white.withOpacity(0),
-                            Colors.white.withOpacity(1),
-                            Colors.white.withOpacity(1),
-                            Colors.white.withOpacity(1),
-                            Colors.white.withOpacity(0),
-                          ],
-                        ),
-                      ),
                     ),
                   ),
                 ],

@@ -38,7 +38,19 @@ class _BasePageState extends State<BasePage> {
         children: [
           const HomePage(),
           Container(color: Colors.grey[200]),
-          Container(color: Colors.grey[200]),
+          PageView(
+            scrollDirection: Axis.vertical,
+            children: [
+              Image.network(
+                'https://pbs.twimg.com/media/FSgl1OfUcAEsiQV?format=jpg&name=large',
+                fit: BoxFit.cover,
+              ),
+              Image.network(
+                'https://pbs.twimg.com/media/FSgl1OfUcAEsiQV?format=jpg&name=large',
+                fit: BoxFit.cover,
+              ),
+            ],
+          ),
           const NotificationsPage(),
           Container(color: Colors.grey[200]),
         ],

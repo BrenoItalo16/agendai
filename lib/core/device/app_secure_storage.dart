@@ -20,7 +20,7 @@ class AppSecureStorage {
   }
 
   Future<void> deleteSessionToken() {
-    //TODO: Chamar B4A para invalidar Sessão.
+    //! Chamar B4A para invalidar Sessão.
     return _secureStorage.delete(key: AppSecureStorageKeys.sessionToken.name);
   }
 }
