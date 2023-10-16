@@ -1,3 +1,4 @@
+import 'package:agendai/core/firebase/messaging/app_messaging.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/utils/no_glow_behavior.dart';
 import 'package:agendai/core/widgets/alert/alert_area.dart';
@@ -21,7 +22,9 @@ Future<void> bootstrap(FlavorConfig config) async {
   );
 
   await configureDependencies(config);
-  // await Future.delayed(const Duration(seconds: 4));
+
+  getIt<AppMessaging>().configure();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -45,9 +48,9 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    final t = AppTheme();
+    final theme = AppTheme();
     return RepositoryProvider.value(
-      value: t,
+      value: theme,
       child: BlocProvider.value(
         value: getIt<SessionCubit>(),
         child: MaterialApp.router(
@@ -62,15 +65,15 @@ class _AppState extends State<App> {
             Locale('pt', 'BR'),
           ],
           theme: ThemeData.light().copyWith(
-            scaffoldBackgroundColor: t.white,
+            scaffoldBackgroundColor: theme.white,
             colorScheme: ThemeData.light().colorScheme.copyWith(
                   background: Colors.white,
                 ),
             //? Customize field info
             textSelectionTheme: TextSelectionThemeData(
-              cursorColor: t.primary,
-              selectionHandleColor: t.primary,
-              selectionColor: t.primary.withOpacity(0.4),
+              cursorColor: theme.primary,
+              selectionHandleColor: theme.primary,
+              selectionColor: theme.primary.withOpacity(0.4),
             ),
           ),
           locale: DevicePreview.locale(context),

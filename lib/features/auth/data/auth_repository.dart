@@ -1,6 +1,7 @@
 import 'package:agendai/core/device/app_secure_storage.dart';
 import 'package:agendai/core/helpers/result.dart';
 import 'package:agendai/features/auth/data/results/sign_up_failed.dart';
+import 'package:agendai/features/auth/models/device.dart';
 import 'package:agendai/features/auth/models/sign_up_dto.dart';
 import 'package:agendai/features/auth/models/user.dart';
 import 'auth_datasource.dart';
@@ -41,5 +42,9 @@ class AuthRepository {
 
   Future<void> logout() {
     return _appSecureStorage.deleteSessionToken();
+  }
+
+  Future<bool> registerDevice(Device device) async {
+    return _datasource.registerDevice(device);
   }
 }

@@ -1,4 +1,3 @@
-import 'package:agendai/core/widgets/glassmorphism.dart';
 import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,25 +95,25 @@ class _BottomNavBarState extends State<BottomNavBar>
             Container(
               margin: const EdgeInsets.only(top: 6),
               decoration: const BoxDecoration(
-                color: Colors.transparent,
+                color: Colors.white,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(36),
                 ),
               ),
               child: Stack(
                 children: [
-                  //?Começa aqui
-                  Positioned(
-                    bottom: -10,
-                    child: Glassmorphism(
-                      blur: 7,
-                      opacity: 0.5,
-                      child: SizedBox(
-                        width: appWidth,
-                        height: 83,
-                      ),
-                    ),
-                  ),
+                  //?Glassmorphism
+                  // Positioned(
+                  //   bottom: -10,
+                  //   child: Glassmorphism(
+                  //     blur: 7,
+                  //     opacity: 0.5,
+                  //     child: SizedBox(
+                  //       width: appWidth,
+                  //       height: 83,
+                  //     ),
+                  //   ),
+                  // ),
                   //!Termina aqui
                   AnimatedPositioned(
                     top: 10,

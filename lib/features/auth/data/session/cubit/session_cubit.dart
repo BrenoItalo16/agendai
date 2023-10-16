@@ -4,6 +4,7 @@ import 'package:agendai/features/auth/data/auth_repository.dart';
 import 'package:agendai/features/auth/data/results/login_failed.dart';
 import 'package:agendai/features/auth/data/results/sign_up_failed.dart';
 import 'package:agendai/features/auth/data/results/validate_token_failed.dart';
+import 'package:agendai/features/auth/models/device.dart';
 import 'package:agendai/features/auth/models/sign_up_dto.dart';
 import 'package:agendai/features/auth/models/user.dart';
 import 'package:bloc/bloc.dart';
@@ -50,5 +51,9 @@ class SessionCubit extends Cubit<SessionState> {
   Future<void> logout() async {
     await _authRepository.logout();
     emit(const SessionState(loggedUser: null));
+  }
+
+  Future<bool> registerDevice(Device device) async {
+    return _authRepository.registerDevice(device);
   }
 }

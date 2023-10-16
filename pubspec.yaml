@@ -68,6 +68,7 @@ dependencies:
   cached_network_image: ^3.3.0
   flutter_localizations:
     sdk: flutter
+  uuid:
 
 dev_dependencies:
   bloc_test: ^9.1.3

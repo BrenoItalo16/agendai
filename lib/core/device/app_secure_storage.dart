@@ -1,7 +1,6 @@
-import 'package:agendai/core/device/app_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-enum AppSecureStoraKeys { sessionToken }
+enum AppSecureStorageKeys { sessionToken }
 
 class AppSecureStorage {
   AppSecureStorage(this._secureStorage);
