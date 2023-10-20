@@ -1,3 +1,4 @@
+import 'package:agendai/core/widgets/app_session_observer.dart';
 import 'package:agendai/core/widgets/app_simple_header.dart';
 import 'package:agendai/features/home/pages/notifications/notifications_page_cubit.dart';
 import 'package:agendai/features/home/pages/notifications/widgets/notifications_list_area.dart';
@@ -25,27 +26,46 @@ class _NotificationsPageState extends State<NotificationsPage>
     return Column(
       children: [
         const AppSimpleHeader(title: "Notificações"),
-        NotificationsSwitch(
-          showRead: showRead,
-          onChanged: (r) {
-            setState(() {
-              showRead = r;
-            });
-            pageController.animateToPage(
-              showRead ? 1 : 0,
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.ease,
-            );
-          },
-        ),
         Expanded(
-          child: PageView(
-            controller: pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: const [
-              NotificationsListArea(status: NotificationStatus.notRead),
-              NotificationsListArea(status: NotificationStatus.read),
-            ],
+          child: AppSessionObserver(
+            listener: (state) {},
+            builder: (_, state) {
+              if (state.loggedUser != null) {
+                return Column(
+                  children: [
+                    NotificationsSwitch(
+                      showRead: showRead,
+                      onChanged: (r) {
+                        setState(() {
+                          showRead = r;
+                        });
+                        pageController.animateToPage(
+                          showRead ? 1 : 0,
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.ease,
+                        );
+                      },
+                    ),
+                    Expanded(
+                      child: PageView(
+                        controller: pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: const [
+                          NotificationsListArea(
+                              status: NotificationStatus.notRead),
+                          NotificationsListArea(
+                              status: NotificationStatus.read),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                return Center(
+                  child: Text('Você precisar logar para ver suas notificações'),
+                );
+              }
+            },
           ),
         ),
       ],
