@@ -15,7 +15,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({this.redirectTo, super.key});
+
+  final String? redirectTo;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -106,6 +108,10 @@ class _LoginPageState extends State<LoginPage> implements LoginPageActions {
 
   @override
   void navToHome() {
-    context.go(AppRoutes.home);
+    if (widget.redirectTo != null) {
+      context.go(widget.redirectTo!);
+    } else {
+      context.go(AppRoutes.home);
+    }
   }
 }

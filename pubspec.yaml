@@ -69,6 +69,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   uuid:
+  collection:
 
 dev_dependencies:
   bloc_test: ^9.1.3

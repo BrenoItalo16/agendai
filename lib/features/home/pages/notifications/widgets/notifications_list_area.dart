@@ -1,3 +1,4 @@
+import 'package:agendai/core/widgets/app_empty_state_indicator.dart';
 import 'package:agendai/core/widgets/app_loading_indicator.dart';
 import 'package:agendai/features/home/pages/notifications/notifications_page_cubit.dart';
 import 'package:agendai/features/home/pages/notifications/widgets/notifications_list_item.dart';
@@ -36,6 +37,18 @@ class _NotificationsListAreaState extends State<NotificationsListArea>
               child: AppLoadingIndicator(),
             );
           }
+
+          if (state.notifications == null) return Container();
+
+          if (state.notifications!.isEmpty) {
+            return const AppEmptyStateIndicator(
+              urlImage: 'assets/img/empty_notification.svg',
+              title: 'Não há notificações',
+              message:
+                  'Até o momento você não tem nenhuma notificação pendente',
+            );
+          }
+
           return ListView.builder(
             padding: MediaQuery.paddingOf(context).add(
               const EdgeInsets.fromLTRB(24, 0, 24, 24),

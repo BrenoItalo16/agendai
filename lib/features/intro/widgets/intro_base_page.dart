@@ -28,7 +28,7 @@ class IntroBasePage extends StatelessWidget {
             flex: 2,
             child: Center(
               child: SizedBox(
-                height: 320,
+                height: MediaQuery.sizeOf(context).width * 0.8,
                 child: SvgPicture.asset(
                   imagePath,
                 ),
@@ -42,14 +42,14 @@ class IntroBasePage extends StatelessWidget {
                   title,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 36,
+                    fontSize: 24,
                     fontWeight: FontWeight.w700,
                     color: t.black,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 SizedBox(
-                  width: 300,
+                  width: MediaQuery.sizeOf(context).width * 0.8,
                   child: Text(
                     body,
                     textAlign: TextAlign.center,

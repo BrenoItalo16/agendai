@@ -76,6 +76,17 @@ class AppTheme {
     color: txtColor,
   );
 
+  late final body24 = TextStyle(
+    fontSize: 24,
+    color: txtColor,
+  );
+
+  late final body24Bold = TextStyle(
+    fontSize: 24,
+    color: txtColor,
+    fontWeight: FontWeight.bold,
+  );
+
   late final heading36Bold = TextStyle(
     fontSize: 36,
     color: txtColor,

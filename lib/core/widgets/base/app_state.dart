@@ -9,7 +9,7 @@ abstract class AppStateless extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppTheme t = context.watch();
-    return builder(context, t);
+    final AppTheme theme = context.watch();
+    return builder(context, theme);
   }
 }

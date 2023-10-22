@@ -51,6 +51,7 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
           padding: MaterialStateProperty.all(
               const EdgeInsets.symmetric(horizontal: 20))),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(width: 24),
           Expanded(

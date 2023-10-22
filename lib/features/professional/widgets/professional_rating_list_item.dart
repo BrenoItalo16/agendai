@@ -1,4 +1,4 @@
-import 'package:agendai/core/widgets/base/app_stateless.dart';
+import 'package:agendai/core/widgets/base/app_state.dart';
 import 'package:agendai/features/professional/models/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';

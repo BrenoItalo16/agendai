@@ -72,7 +72,7 @@ Future<void> configureDependencies(FlavorConfig config) async {
   getIt.registerSingleton(AppCrashlytics(getIt()));
 
   getIt.registerLazySingleton(() => FirebaseMessaging.instance);
-  getIt.registerSingleton(AppMessaging(getIt(), getIt()));
+  getIt.registerSingleton(AppMessaging(getIt(), getIt(), getIt()));
 
   getIt.registerLazySingleton(() => FirebaseRemoteConfig.instance);
   getIt.registerSingleton(AppRemoteConfig(getIt()));

@@ -1,6 +1,6 @@
 import 'package:agendai/core/widgets/app_card.dart';
 import 'package:agendai/core/widgets/app_chip.dart';
-import 'package:agendai/core/widgets/base/app_stateless.dart';
+import 'package:agendai/core/widgets/base/app_state.dart';
 import 'package:agendai/features/home/pages/home/models/notification.dart';
 import 'package:agendai/features/home/pages/notifications/notifications_page_cubit.dart';
 import 'package:flutter/material.dart' hide Notification;

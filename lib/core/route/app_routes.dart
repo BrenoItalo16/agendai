@@ -37,7 +37,9 @@ final router = GoRouter(
           ),
           GoRoute(
             path: AppRoutes.login.path,
-            builder: (context, state) => const LoginPage(),
+            builder: (context, state) => LoginPage(
+              redirectTo: state.queryParameters['redirectTo'],
+            ),
           ),
         ]),
     GoRoute(
@@ -50,7 +52,9 @@ final router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.home,
-      builder: (context, state) => const BasePage(),
+      builder: (context, state) => BasePage(
+        initialTab: state.queryParameters['initialTab'],
+      ),
     ),
     GoRoute(
         path: AppRoutes.professionalDetails(id: ':id'),
