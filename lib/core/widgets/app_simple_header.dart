@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AppSimpleHeader extends AppStateless {
+class AppSimpleHeader extends AppState {
   const AppSimpleHeader({super.key, required this.title});
 
   final String title;

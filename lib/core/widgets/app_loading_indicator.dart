@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class AppLoadingIndicator extends AppStateless {
+class AppLoadingIndicator extends AppState {
   const AppLoadingIndicator({
     super.key,
     this.size = 40,

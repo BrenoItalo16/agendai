@@ -52,7 +52,8 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
           bottomAction: SizedBox(
             height: 56,
             child: AppElevatedButton(
-              label: 'AGENDAR SERVIÇO',
+              id: 'scheduling-service',
+              label: 'Agendar serviço',
               onPressed: () {},
             ),
           ),

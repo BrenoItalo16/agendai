@@ -9,9 +9,15 @@ import 'package:agendai/features/intro/pages/onboarding/onboarding_page.dart';
 import 'package:agendai/features/intro/pages/splash/splash_page.dart';
 import 'package:agendai/features/professional/pages/professional_details/professional_details_page.dart';
 import 'package:agendai/features/professional/pages/professional_ratings/professional_ratings_page.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
+  observers: [
+    FirebaseAnalyticsObserver(
+      analytics: FirebaseAnalytics.instance,
+    ),
+  ],
   initialLocation: '/',
   debugLogDiagnostics: true,
   redirect: (context, state) {

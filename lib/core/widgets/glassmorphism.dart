@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/base/app_state.dart';
 
-class Glassmorphism extends AppStateless {
+class Glassmorphism extends AppState {
   const Glassmorphism({
     super.key,
     this.blur = 2,

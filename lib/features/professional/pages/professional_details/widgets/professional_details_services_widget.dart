@@ -3,7 +3,7 @@ import 'package:agendai/features/professional/models/professional_details.dart';
 import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 
-class ProfessionalDetailsServicesWidget extends AppStateless {
+class ProfessionalDetailsServicesWidget extends AppState {
   const ProfessionalDetailsServicesWidget(
       {required this.professional, super.key});
 

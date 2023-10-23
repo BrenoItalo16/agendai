@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:iconly/iconly.dart';
 
-class ProfessionalBasicDetailsWidget extends AppStateless {
+class ProfessionalBasicDetailsWidget extends AppState {
   const ProfessionalBasicDetailsWidget({required this.professional, super.key});
 
   final ProfessionalDetails professional;

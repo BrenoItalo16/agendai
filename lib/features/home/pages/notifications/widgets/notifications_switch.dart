@@ -2,7 +2,7 @@ import 'package:agendai/core/widgets/base/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 
-class NotificationsSwitch extends AppStateless {
+class NotificationsSwitch extends AppState {
   const NotificationsSwitch({
     super.key,
     required this.showRead,

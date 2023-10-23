@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:iconly/iconly.dart';
 
-class AppLoadingRatings extends AppStateless {
+class AppLoadingRatings extends AppState {
   const AppLoadingRatings({super.key});
 
   @override

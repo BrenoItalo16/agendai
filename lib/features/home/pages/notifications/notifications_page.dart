@@ -103,6 +103,7 @@ class _NotificationsPageState extends State<NotificationsPage>
                             SizedBox(
                               width: 180,
                               child: AppOutlinedButton(
+                                id: 'signin',
                                 label: "Entrar",
                                 onPressed: () {
                                   final uri = Uri(

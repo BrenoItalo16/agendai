@@ -128,6 +128,7 @@ class _AppBasePageState extends State<AppBasePage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AppIconButton(
+                            id: 'back',
                             icon: IconlyBold.arrow_left_2,
                             onPressed: context.pop),
                         Expanded(

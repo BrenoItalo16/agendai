@@ -131,6 +131,7 @@ class _OnboardingPageState extends State<OnboardingPage>
                       ],
                       Expanded(
                         child: AppElevatedButton(
+                          id: 'next',
                           label: pages[page].nextButtonLabel ?? 'Próximo',
                           icon: IconlyBold.arrow_right_2,
                           onPressed: () async {
@@ -165,10 +166,12 @@ class _OnboardingPageState extends State<OnboardingPage>
             'Você não autorizou esta permissão! Acesse as configurações do seu dispositivo para permitir.',
         actions: [
           AppOutlinedButton(
+            id: 'next-anyway',
             label: 'Prosseguir mesmo assim',
             onPressed: Navigator.of(context).pop,
           ),
           AppElevatedButton(
+            id: 'go-to-configs',
             label: 'Ir para configurações',
             onPressed: () async {
               await getIt<AppDeviceSettings>().openSettings();

@@ -119,6 +119,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpActions {
               ),
               const SizedBox(height: 24),
               AppElevatedButton(
+                id: 'sign-up',
                 label: 'Cadastrar',
                 onPressed: state.isValid
                     ? () {

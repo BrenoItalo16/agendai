@@ -37,11 +37,13 @@ class AuthPage extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               AppElevatedButton(
+                id: 'login',
                 label: 'Entrar',
                 onPressed: () => context.push(AppRoutes.login.fullpath),
               ),
               const SizedBox(height: 24),
               AppOutlinedButton(
+                id: 'sign-up',
                 label: 'Cadastrar',
                 onPressed: () => context.push(AppRoutes.signup.fullpath),
               ),

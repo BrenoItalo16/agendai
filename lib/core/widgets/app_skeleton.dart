@@ -3,7 +3,7 @@ import 'package:agendai/core/widgets/base/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class AppSkeleton extends AppStateless {
+class AppSkeleton extends AppState {
   const AppSkeleton(
       {super.key, this.width, this.height, this.child, this.margin});
 
