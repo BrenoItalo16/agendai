@@ -23,7 +23,7 @@ class HomeHeaderSection extends StatelessWidget {
                   sessionCubit.logout();
                 } else {
                   sessionCubit.login(
-                      email: 'teste2@startto.dev', password: '12345678');
+                      email: 'user@user.com', password: '12345678');
                 }
               },
               color: t.black,

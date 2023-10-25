@@ -10,7 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 
-class NotificationsListItem extends AppStateless {
+class NotificationsListItem extends AppState {
   const NotificationsListItem({
     super.key,
     required this.notification,

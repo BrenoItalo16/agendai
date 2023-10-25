@@ -1,70 +1,75 @@
 import 'package:agendai/core/theme/app_theme.dart';
+import 'package:agendai/core/widgets/base/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AppElevatedButton extends StatefulWidget {
+class AppElevatedButton extends AppState {
   const AppElevatedButton({
     super.key,
     required this.label,
     required this.onPressed,
     this.icon,
+    required this.id,
   });
 
+  final String id;
   final String label;
   final VoidCallback? onPressed;
   final IconData? icon;
 
   @override
-  State<AppElevatedButton> createState() => _AppElevatedButtonState();
-}
-
-class _AppElevatedButtonState extends State<AppElevatedButton> {
-  @override
-  Widget build(BuildContext context) {
-    AppTheme t = context.watch();
-
-    return OutlinedButton(
-      onPressed: widget.onPressed,
+  Widget builder(BuildContext context, AppTheme theme) {
+    return ElevatedButton(
+      onPressed: onPressed != null
+          ? () {
+              onPressed!.call();
+              analytics.logButtonPressed(id);
+            }
+          : null,
       style: ButtonStyle(
-          backgroundColor: MaterialStateColor.resolveWith((states) {
-            if (states.contains(MaterialState.disabled)) {
-              return t.grey;
-            }
-            return t.primary;
-          }),
-          shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-          minimumSize: MaterialStateProperty.all(const Size(128, 56)),
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
+        backgroundColor: MaterialStateColor.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) {
+            return theme.grey;
+          }
+          return theme.primary;
+        }),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
           ),
-          foregroundColor: MaterialStateColor.resolveWith((states) {
-            if (states.contains(MaterialState.pressed)) {
-              return t.lightGrey;
-            }
-            return t.white;
-          }),
-          elevation: MaterialStateProperty.all(2),
-          padding: MaterialStateProperty.all(
-              const EdgeInsets.symmetric(horizontal: 20))),
+        ),
+        minimumSize: MaterialStateProperty.all(const Size(128, 58)),
+        textStyle: MaterialStateProperty.all(
+          const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        foregroundColor: MaterialStateColor.resolveWith((states) {
+          if (states.contains(MaterialState.disabled)) {
+            return theme.lightGrey;
+          }
+          return Colors.white;
+        }),
+        elevation: MaterialStateProperty.all(0),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(horizontal: 16),
+        ),
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(width: 24),
-          Expanded(
+          Icon(
+            icon,
+            color: Colors.transparent,
+          ),
+          Flexible(
             child: Center(
               child: Text(
-                widget.label,
-                overflow: TextOverflow.ellipsis,
+                label,
+                textAlign: TextAlign.center,
               ),
             ),
           ),
-          Icon(
-            widget.icon,
-          ),
+          Icon(icon),
         ],
       ),
     );

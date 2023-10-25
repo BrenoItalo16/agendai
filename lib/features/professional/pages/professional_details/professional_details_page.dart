@@ -1,3 +1,4 @@
+import 'package:agendai/core/route/app_routes.dart';
 import 'package:agendai/core/widgets/app_base_page.dart';
 import 'package:agendai/core/widgets/app_elevated_button.dart';
 import 'package:agendai/features/professional/pages/professional_details/professional_details_page_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:agendai/features/professional/pages/professional_details/widgets
 import 'package:agendai/features/professional/pages/professional_details/widgets/professional_details_services_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfessionalDetailsPage extends StatefulWidget {
   const ProfessionalDetailsPage({super.key, required this.id});
@@ -52,8 +54,13 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
           bottomAction: SizedBox(
             height: 56,
             child: AppElevatedButton(
-              label: 'AGENDAR SERVIÇO',
-              onPressed: () {},
+              id: 'scheduling-service',
+              label: 'Agendar serviço',
+              onPressed: () => context.push(
+                AppRoutes.professionalScheduleServices.fullPath(
+                  id: widget.id,
+                ),
+              ),
             ),
           ),
         );

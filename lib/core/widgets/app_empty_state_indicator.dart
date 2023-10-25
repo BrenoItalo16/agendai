@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter_svg/svg.dart';
 
-class AppEmptyStateIndicator extends AppStateless {
+class AppEmptyStateIndicator extends AppState {
   const AppEmptyStateIndicator({
     required this.urlImage,
     required this.title,

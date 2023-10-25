@@ -1,13 +1,21 @@
+import 'package:agendai/core/theme/app_theme.dart';
+import 'package:agendai/core/widgets/base/app_state.dart';
 import 'package:flutter/material.dart';
 
-class AppIconButton extends StatelessWidget {
-  const AppIconButton({super.key, required this.icon, this.onPressed});
+class AppIconButton extends AppState {
+  const AppIconButton({
+    super.key,
+    required this.id,
+    required this.icon,
+    this.onPressed,
+  });
 
+  final String id;
   final IconData icon;
   final VoidCallback? onPressed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget builder(BuildContext context, AppTheme theme) {
     return SizedBox(
       height: 48,
       width: 48,
@@ -18,7 +26,12 @@ class AppIconButton extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: onPressed,
+          onTap: onPressed != null
+              ? () {
+                  onPressed!.call();
+                  analytics.logButtonPressed(id);
+                }
+              : null,
           child: Icon(icon),
         ),
       ),

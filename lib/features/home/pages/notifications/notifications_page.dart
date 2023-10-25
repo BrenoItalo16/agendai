@@ -103,15 +103,15 @@ class _NotificationsPageState extends State<NotificationsPage>
                             SizedBox(
                               width: 180,
                               child: AppOutlinedButton(
+                                id: 'signin',
                                 label: "Entrar",
                                 onPressed: () {
                                   final uri = Uri(
-                                    path: AppRoutes.login.fullpath,
-                                    queryParameters: {
-                                      'redirectTo':
-                                          '${AppRoutes.home}?initialTab=notifications',
-                                    },
-                                  );
+                                      path: AppRoutes.login.fullPath,
+                                      queryParameters: {
+                                        'redirectTo':
+                                            '${AppRoutes.home}?initialTab=notifications'
+                                      });
                                   context.go(uri.toString());
                                 },
                               ),

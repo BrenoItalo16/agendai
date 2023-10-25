@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:iconly/iconly.dart';
 
-class ProfessionalRatingListItem extends AppStateless {
+class ProfessionalRatingListItem extends AppState {
   const ProfessionalRatingListItem({super.key, required this.rating});
 
   final Rating rating;

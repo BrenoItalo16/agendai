@@ -20,7 +20,8 @@ class HomeNextScheduleItem extends StatelessWidget {
     return AppCard(
       onPressed: () {
         context.push(
-          AppRoutes.professionalDetails(id: scheduling.professional.id),
+          AppRoutes.professionalDetails
+              .fullPath(id: scheduling.professional.id),
         );
       },
       child: Row(

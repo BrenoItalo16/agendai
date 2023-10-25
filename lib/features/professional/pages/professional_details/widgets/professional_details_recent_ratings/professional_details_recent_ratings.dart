@@ -47,6 +47,7 @@ class _ProfessionalDetailsRecentRatingsState
                 if (state.status ==
                     ProfessionalDetailsRecentRatingsStatus.success)
                   AppOutlinedButton(
+                    id: 'see-all',
                     label: 'Ver todas',
                     minHeight: 32,
                     onPressed: () => context.push(
