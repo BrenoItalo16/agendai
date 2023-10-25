@@ -1,3 +1,5 @@
+import 'package:agendai/core/di/di.dart';
+import 'package:agendai/core/firebase/analytics/app_analytics.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +9,7 @@ import 'package:iconly/iconly.dart';
 class AppTextField extends StatefulWidget {
   const AppTextField({
     super.key,
+    required this.id,
     required this.title,
     required this.hint,
     this.initialText,
@@ -17,6 +20,7 @@ class AppTextField extends StatefulWidget {
     this.error,
   });
 
+  final String id;
   final String title;
   final String hint;
   final String? initialText;
@@ -32,6 +36,25 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   bool hidePass = true;
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode.addListener(onFocusChanged);
+  }
+
+  void onFocusChanged() {
+    if (focusNode.hasFocus) {
+      getIt<AppAnalytics>().logFieldEdited(widget.id);
+    }
+  }
+
+  @override
+  void dispose() {
+    focusNode.removeListener(onFocusChanged);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +106,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   keyboardType: widget.textInputType,
                   obscureText: widget.obscure && hidePass,
                   inputFormatters: widget.inputFormaters,
+                  focusNode: focusNode,
                 ),
               ],
             ),

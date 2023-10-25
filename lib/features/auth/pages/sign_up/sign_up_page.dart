@@ -49,6 +49,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpActions {
               ),
               const SizedBox(height: 24),
               AppTextField(
+                id: 'full-name',
                 title: 'Nome Completo',
                 hint: 'Ex: John doe',
                 textInputType: TextInputType.name,
@@ -62,6 +63,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpActions {
               ),
               const SizedBox(height: 24),
               AppTextField(
+                id: 'cpf',
                 title: 'CPF',
                 hint: 'Apenas números',
                 textInputType: TextInputType.number,
@@ -78,6 +80,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpActions {
               ),
               const SizedBox(height: 24),
               AppTextField(
+                id: 'telefone',
                 title: 'Telefone',
                 hint: 'Apenas números',
                 textInputType: TextInputType.phone,
@@ -94,6 +97,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpActions {
               ),
               const SizedBox(height: 32),
               AppTextField(
+                id: 'e-mail',
                 title: 'E-mail',
                 hint: 'Ex: nome@email.com',
                 textInputType: TextInputType.emailAddress,
@@ -106,6 +110,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpActions {
               ),
               const SizedBox(height: 24),
               AppTextField(
+                id: 'senha',
                 title: 'Senha',
                 hint: 'Mínimo de 8 dígitos',
                 obscure: true,

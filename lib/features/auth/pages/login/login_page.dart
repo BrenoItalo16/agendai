@@ -46,6 +46,7 @@ class _LoginPageState extends State<LoginPage> implements LoginPageActions {
               ),
               const SizedBox(height: 32),
               AppTextField(
+                id: 'e-mail',
                 title: 'E-mail',
                 hint: 'Ex: nome@email.com',
                 textInputType: TextInputType.emailAddress,
@@ -58,6 +59,7 @@ class _LoginPageState extends State<LoginPage> implements LoginPageActions {
               ),
               const SizedBox(height: 24),
               AppTextField(
+                id: 'senha',
                 title: 'Senha',
                 hint: 'Mínimo de 8 dígitos',
                 obscure: true,
@@ -73,6 +75,7 @@ class _LoginPageState extends State<LoginPage> implements LoginPageActions {
                 label: 'Entrar',
                 onPressed: state.isValid
                     ? () {
+                        // FirebaseCrashlytics.instance.crash();
                         FocusScope.of(context).unfocus();
                         context.read<LoginPageCubit>().onLoginPressed();
                       }
