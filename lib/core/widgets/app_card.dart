@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppCard extends StatelessWidget {
   const AppCard({
     Key? key,
+    this.color,
     this.onPressed,
     required this.child,
     this.width,
     this.shadowOffset = const Offset(6, 12),
     this.borderRadius,
     this.padding = const EdgeInsets.all(20),
+    this.shadowEnabled = true,
   }) : super(key: key);
 
   final VoidCallback? onPressed;
@@ -19,6 +21,8 @@ class AppCard extends StatelessWidget {
   final Offset shadowOffset;
   final BorderRadius? borderRadius;
   final EdgeInsets padding;
+  final bool shadowEnabled;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +30,20 @@ class AppCard extends StatelessWidget {
 
     return Container(
       width: width,
-      margin: EdgeInsets.only(bottom: shadowOffset.dy * 2),
+      margin: EdgeInsets.only(bottom: shadowEnabled ? shadowOffset.dy * 2 : 0),
       decoration: BoxDecoration(
         boxShadow: [
-          BoxShadow(
-            offset: shadowOffset,
-            blurRadius: 15,
-            spreadRadius: 0,
-            color: t.black.withOpacity(0.08),
-          )
+          if (shadowEnabled)
+            BoxShadow(
+              offset: shadowOffset,
+              blurRadius: 15,
+              spreadRadius: 0,
+              color: t.black.withOpacity(0.08),
+            )
         ],
       ),
       child: Material(
-        color: Colors.white,
+        color: color ?? Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: borderRadius ?? BorderRadius.circular(18),
         ),

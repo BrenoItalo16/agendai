@@ -2,11 +2,12 @@ import 'package:agendai/core/widgets/app_empty_state_indicator.dart';
 import 'package:agendai/core/widgets/app_loading_indicator.dart';
 import 'package:agendai/features/home/pages/notifications/notifications_page_cubit.dart';
 import 'package:agendai/features/home/pages/notifications/widgets/notifications_list_item.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NotificationsListArea extends StatefulWidget {
-  const NotificationsListArea({super.key, required this.status});
+  const NotificationsListArea({Key? key, required this.status})
+      : super(key: key);
 
   final NotificationStatus status;
 
@@ -22,12 +23,14 @@ class _NotificationsListAreaState extends State<NotificationsListArea>
   @override
   void initState() {
     super.initState();
+
     cubit.loadNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return BlocProvider.value(
       value: cubit,
       child: BlocBuilder<NotificationsPageCubit, NotificationsPageState>(
@@ -42,30 +45,31 @@ class _NotificationsListAreaState extends State<NotificationsListArea>
 
           if (state.notifications!.isEmpty) {
             return const AppEmptyStateIndicator(
-              urlImage: 'assets/img/empty_notification.svg',
-              title: 'Não há notificações',
-              message:
-                  'Até o momento você não tem nenhuma notificação pendente',
+              icon: Icons.notifications_off_outlined,
+              message: 'Você não possui notificações ainda!',
             );
           }
 
-          return ListView.builder(
-            padding: MediaQuery.paddingOf(context).add(
-              const EdgeInsets.fromLTRB(24, 0, 24, 24),
+          return Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: ListView.builder(
+              padding: MediaQuery.paddingOf(context).add(
+                const EdgeInsets.fromLTRB(24, 0, 24, 24),
+              ),
+              itemBuilder: (_, i) {
+                if (i < state.notifications!.length) {
+                  final notification = state.notifications![i];
+                  return NotificationListItem(notification: notification);
+                } else {
+                  cubit.loadNotifications();
+                  return const Center(
+                    child: AppLoadingIndicator(),
+                  );
+                }
+              },
+              itemCount:
+                  state.notifications!.length + (state.finishedLoading ? 0 : 1),
             ),
-            itemBuilder: (_, i) {
-              if (i < state.notifications!.length) {
-                final notification = state.notifications![i];
-                return NotificationsListItem(notification: notification);
-              } else {
-                cubit.loadNotifications();
-                return const Center(
-                  child: AppLoadingIndicator(),
-                );
-              }
-            },
-            itemCount:
-                state.notifications!.length + (state.finishedLoading ? 0 : 1),
           );
         },
       ),

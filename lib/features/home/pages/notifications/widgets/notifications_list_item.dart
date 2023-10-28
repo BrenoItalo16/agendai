@@ -7,14 +7,10 @@ import 'package:flutter/material.dart' hide Notification;
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 
-class NotificationsListItem extends AppState {
-  const NotificationsListItem({
-    super.key,
-    required this.notification,
-  });
+class NotificationListItem extends AppState {
+  const NotificationListItem({super.key, required this.notification});
 
   final Notification notification;
 
@@ -33,15 +29,15 @@ class NotificationsListItem extends AppState {
       child: Row(
         children: [
           Container(
-            height: 36,
             width: 36,
+            height: 36,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              shape: BoxShape.circle,
               color: notification.isRead ? theme.lightGrey : theme.primary,
             ),
             child: Icon(
-              IconlyLight.notification,
-              color: notification.isRead ? theme.grey : theme.white,
+              Icons.notifications_none,
+              color: notification.isRead ? theme.black : Colors.white,
             ),
           ),
           const SizedBox(width: 20),
@@ -54,33 +50,31 @@ class NotificationsListItem extends AppState {
                     Expanded(
                       child: Text(
                         notification.title,
-                        style: notification.isRead
-                            ? theme.body16
-                            : theme.body16Bold,
+                        style: theme.body16Bold.copyWith(
+                          fontWeight: notification.isRead
+                              ? FontWeight.w400
+                              : FontWeight.w700,
+                        ),
                       ),
                     ),
                     AppChip(
-                      text: DateFormat('dd/MMM').format(notification.createdAt),
-                      minWidth: 64,
-                      color: notification.isRead
-                          ? null
-                          : theme.primary.withOpacity(0.1),
+                      text: DateFormat('dd MMM').format(notification.createdAt),
+                      minWidth: 60,
                       textStyle: notification.isRead
-                          ? null
-                          : theme.label12Bold.copyWith(color: theme.primary),
+                          ? theme.label12Bold.copyWith(color: theme.black)
+                          : null,
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   notification.subtitle,
                   style: theme.body13,
                   maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                )
               ],
             ),
-          ),
+          )
         ],
       ),
     );

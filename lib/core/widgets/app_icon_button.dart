@@ -8,17 +8,19 @@ class AppIconButton extends AppState {
     required this.id,
     required this.icon,
     this.onPressed,
+    this.size = 48,
   });
 
   final String id;
   final IconData icon;
   final VoidCallback? onPressed;
+  final double size;
 
   @override
   Widget builder(BuildContext context, AppTheme theme) {
     return SizedBox(
-      height: 48,
-      width: 48,
+      height: size,
+      width: size,
       child: Material(
         type: MaterialType.transparency,
         shape: RoundedRectangleBorder(
@@ -32,7 +34,7 @@ class AppIconButton extends AppState {
                   analytics.logButtonPressed(id);
                 }
               : null,
-          child: Icon(icon),
+          child: Icon(icon, color: theme.txtColor),
         ),
       ),
     );

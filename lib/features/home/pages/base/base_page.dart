@@ -54,13 +54,25 @@ class _BasePageState extends State<BasePage> {
           PageView(
             scrollDirection: Axis.vertical,
             children: [
-              Image.network(
-                'https://pbs.twimg.com/media/FSgl1OfUcAEsiQV?format=jpg&name=large',
-                fit: BoxFit.cover,
-              ),
-              Image.network(
-                'https://pbs.twimg.com/media/FSgl1OfUcAEsiQV?format=jpg&name=large',
-                fit: BoxFit.cover,
+              Stack(
+                children: [
+                  Center(
+                    child: Image.network(
+                      'https://pbs.twimg.com/media/FSgl1OfUcAEsiQV?format=jpg&name=large',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      height: 350,
+                      width: 350,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(36)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

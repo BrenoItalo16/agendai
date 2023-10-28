@@ -75,6 +75,8 @@ class _AppState extends State<App> {
               selectionHandleColor: theme.primary,
               selectionColor: theme.primary.withOpacity(0.4),
             ),
+            highlightColor: theme.primary.withOpacity(0.1),
+            splashColor: theme.primary.withOpacity(0.1),
           ),
           locale: DevicePreview.locale(context),
           builder: (context, child) {
