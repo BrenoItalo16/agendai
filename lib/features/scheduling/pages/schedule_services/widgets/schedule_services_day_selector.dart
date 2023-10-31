@@ -1,12 +1,24 @@
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_icon_button.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 
 class ScheduleServicesDaySelector extends StatefulWidget {
-  const ScheduleServicesDaySelector({Key? key}) : super(key: key);
+  const ScheduleServicesDaySelector({
+    Key? key,
+    required this.currentMonth,
+    required this.lastDay,
+    required this.onMonthChanged,
+    required this.onRangeChanged,
+  }) : super(key: key);
+
+  final DateTime currentMonth;
+  final DateTime lastDay;
+  final Function(DateTime) onMonthChanged;
+  final Function(DateTime, DateTime) onRangeChanged;
 
   @override
   State<ScheduleServicesDaySelector> createState() =>
@@ -18,12 +30,13 @@ class _ScheduleServicesDaySelectorState
   final PageController pageController = PageController();
   int currentPage = 0;
 
-  final currentMonth = DateTime(2023, 10);
+  DateTime get currentMonth => widget.currentMonth;
+
   final today = DateTime.now();
 
   List<CalendarDay> days = [];
 
-  CalendarDay? selectedDay;
+  late DateTime selectedDay = DateUtils.dateOnly(today);
 
   @override
   void initState() {
@@ -32,7 +45,26 @@ class _ScheduleServicesDaySelectorState
     createDays();
   }
 
+  @override
+  void didUpdateWidget(ScheduleServicesDaySelector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.currentMonth != widget.currentMonth) {
+      createDays();
+
+      final currentDayIndex = days.indexWhere(
+        (d) =>
+            DateUtils.dateOnly(d.dateTime) == DateUtils.dateOnly(selectedDay),
+      );
+
+      currentPage = currentDayIndex ~/ 7;
+      pageController.jumpToPage(currentPage);
+    }
+  }
+
   void createDays() {
+    days.clear();
+
     final firstMonthWeekDay = currentMonth.weekday;
     if (firstMonthWeekDay != DateTime.monday) {
       for (int i = firstMonthWeekDay - 1; i >= 1; i--) {
@@ -47,10 +79,9 @@ class _ScheduleServicesDaySelectorState
         day < DateUtils.getDaysInMonth(currentMonth.year, currentMonth.month);
         day++) {
       final monthDay = currentMonth.add(Duration(days: day));
-      days.add(CalendarDay(
-          dateTime: monthDay,
-          selectable:
-              !monthDay.isBefore(today.subtract(const Duration(days: 1)))));
+      final isAvailable = monthDay.isBefore(widget.lastDay) &&
+          !monthDay.isBefore(today.subtract(const Duration(days: 1)));
+      days.add(CalendarDay(dateTime: monthDay, selectable: isAvailable));
     }
 
     final lastMonthDay = days.last.dateTime;
@@ -63,6 +94,12 @@ class _ScheduleServicesDaySelectorState
         );
       }
     }
+
+    final currentDayIndex = days.indexWhere(
+      (d) => DateUtils.dateOnly(d.dateTime) == DateUtils.dateOnly(today),
+    );
+    final beforePages = currentDayIndex ~/ 7;
+    days.removeRange(0, beforePages * 7);
   }
 
   @override
@@ -72,10 +109,10 @@ class _ScheduleServicesDaySelectorState
     Color getDayTextColor(CalendarDay day) {
       if (!day.selectable) {
         return theme.grey;
-      } else if (day == selectedDay) {
+      } else if (day.dateTime == selectedDay) {
         return theme.white;
       } else {
-        return theme.txtColor;
+        return theme.black;
       }
     }
 
@@ -89,7 +126,6 @@ class _ScheduleServicesDaySelectorState
             size: 40,
             id: 'mes-anterior',
             icon: IconlyBold.arrow_left_2,
-            // iconPath: 'assets/icons/chevron_left.svg',
             onPressed: currentPage > 0
                 ? () {
                     pageController.animateToPage(
@@ -109,6 +145,9 @@ class _ScheduleServicesDaySelectorState
                   setState(() {
                     currentPage = p;
                   });
+                  final pageDays = days.getRange(p * 7, (p + 1) * 7).toList();
+                  widget.onRangeChanged(
+                      pageDays.first.dateTime, pageDays.last.dateTime);
                 },
                 children: [
                   for (int page = 0; page < days.length / 7; page++)
@@ -121,14 +160,15 @@ class _ScheduleServicesDaySelectorState
                         final itemWidth = (width) / 7;
 
                         final selectedDayInView =
-                            pageDays.contains(selectedDay);
+                            pageDays.any((d) => d.dateTime == selectedDay);
 
                         return Stack(
                           children: [
                             if (selectedDayInView)
                               AnimatedPositioned(
-                                left:
-                                    itemWidth * pageDays.indexOf(selectedDay!),
+                                left: itemWidth *
+                                    pageDays.indexWhere(
+                                        (d) => d.dateTime == selectedDay),
                                 duration: const Duration(milliseconds: 300),
                                 child: Container(
                                   width: itemWidth,
@@ -146,36 +186,58 @@ class _ScheduleServicesDaySelectorState
                                 for (final day in pageDays)
                                   Expanded(
                                     child: InkWell(
-                                      onTap: day.selectable
-                                          ? () {
-                                              setState(() {
-                                                selectedDay = day;
-                                              });
-                                            }
-                                          : null,
+                                      onTap: () {
+                                        if (day.selectable) {
+                                          setState(() {
+                                            selectedDay = day.dateTime;
+                                          });
+                                        } else {
+                                          if (day.dateTime
+                                                  .isBefore(widget.lastDay) &&
+                                              day.dateTime.isAfter(today)) {
+                                            widget.onMonthChanged(DateTime(
+                                                day.dateTime.year,
+                                                day.dateTime.month));
+                                            setState(() {
+                                              selectedDay = day.dateTime;
+                                            });
+                                          }
+                                        }
+                                      },
                                       borderRadius: BorderRadius.circular(14),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            day.dateTime.day
-                                                .toString()
-                                                .padLeft(2, '0'),
-                                            style: theme.heading20Bold.copyWith(
-                                              color: getDayTextColor(day),
+                                      child: TweenAnimationBuilder<double>(
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        duration: const Duration(seconds: 1),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              day.dateTime.day
+                                                  .toString()
+                                                  .padLeft(2, '0'),
+                                              style:
+                                                  theme.heading20Bold.copyWith(
+                                                color: getDayTextColor(day),
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            DateFormat('EEE')
-                                                .format(day.dateTime)
-                                                .toLowerCase(),
-                                            style: theme.body13.copyWith(
-                                              fontWeight: FontWeight.w600,
-                                              color: getDayTextColor(day),
-                                            ),
-                                          )
-                                        ],
+                                            Text(
+                                              DateFormat('EEE')
+                                                  .format(day.dateTime)
+                                                  .toLowerCase(),
+                                              style: theme.body13.copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                color: getDayTextColor(day),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        builder: (_, value, child) {
+                                          return Opacity(
+                                            opacity: value,
+                                            child: child,
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
@@ -209,8 +271,8 @@ class _ScheduleServicesDaySelectorState
   }
 }
 
-class CalendarDay {
-  CalendarDay({required this.dateTime, required this.selectable});
+class CalendarDay extends Equatable {
+  const CalendarDay({required this.dateTime, required this.selectable});
 
   final DateTime dateTime;
   final bool selectable;
@@ -219,4 +281,7 @@ class CalendarDay {
   String toString() {
     return 'CalendarDay{dateTime: $dateTime, selectable: $selectable}';
   }
+
+  @override
+  List<Object?> get props => [dateTime, selectable];
 }
