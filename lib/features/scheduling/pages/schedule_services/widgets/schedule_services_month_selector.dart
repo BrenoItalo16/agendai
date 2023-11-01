@@ -14,6 +14,8 @@ class ScheduleServicesMonthSelector extends AppState {
   Widget builder(BuildContext context, AppTheme theme) {
     return BlocBuilder<ScheduleServicesPageCubit, ScheduleServicesPageState>(
       builder: (context, state) {
+        if (state.selectedServices.isEmpty) return Container();
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

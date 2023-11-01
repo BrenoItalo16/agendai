@@ -1,5 +1,7 @@
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_icon_button.dart';
+import 'package:agendai/features/scheduling/models/day_slots.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,12 +15,16 @@ class ScheduleServicesDaySelector extends StatefulWidget {
     required this.lastDay,
     required this.onMonthChanged,
     required this.onRangeChanged,
+    required this.daySlots,
+    required this.onDaySelected,
   }) : super(key: key);
 
   final DateTime currentMonth;
   final DateTime lastDay;
   final Function(DateTime) onMonthChanged;
   final Function(DateTime, DateTime) onRangeChanged;
+  final Function(DateTime) onDaySelected;
+  final List<DaySlots>? daySlots;
 
   @override
   State<ScheduleServicesDaySelector> createState() =>
@@ -36,13 +42,14 @@ class _ScheduleServicesDaySelectorState
 
   List<CalendarDay> days = [];
 
-  late DateTime selectedDay = DateUtils.dateOnly(today);
+  DateTime? selectedDay;
 
   @override
   void initState() {
     super.initState();
 
     createDays();
+    widget.onRangeChanged(days.first.dateTime, days[6].dateTime);
   }
 
   @override
@@ -52,13 +59,16 @@ class _ScheduleServicesDaySelectorState
     if (oldWidget.currentMonth != widget.currentMonth) {
       createDays();
 
-      final currentDayIndex = days.indexWhere(
-        (d) =>
-            DateUtils.dateOnly(d.dateTime) == DateUtils.dateOnly(selectedDay),
-      );
+      if (selectedDay != null) {
+        final currentDayIndex = days.indexWhere(
+          (d) =>
+              DateUtils.dateOnly(d.dateTime) ==
+              DateUtils.dateOnly(selectedDay!),
+        );
 
-      currentPage = currentDayIndex ~/ 7;
-      pageController.jumpToPage(currentPage);
+        currentPage = currentDayIndex ~/ 7;
+        pageController.jumpToPage(currentPage);
+      }
     }
   }
 
@@ -203,6 +213,7 @@ class _ScheduleServicesDaySelectorState
                                             });
                                           }
                                         }
+                                        widget.onDaySelected(selectedDay!);
                                       },
                                       borderRadius: BorderRadius.circular(14),
                                       child: TweenAnimationBuilder<double>(
@@ -229,7 +240,31 @@ class _ScheduleServicesDaySelectorState
                                                 fontWeight: FontWeight.w600,
                                                 color: getDayTextColor(day),
                                               ),
-                                            )
+                                            ),
+                                            if (widget.daySlots != null &&
+                                                (widget.daySlots!
+                                                        .firstWhereOrNull((d) =>
+                                                            DateUtils.dateOnly(
+                                                                d.date) ==
+                                                            DateUtils.dateOnly(
+                                                                day.dateTime))
+                                                        ?.slots
+                                                        .isNotEmpty ??
+                                                    false))
+                                              Container(
+                                                width: 20,
+                                                height: 4,
+                                                margin: const EdgeInsets.only(
+                                                    top: 2),
+                                                decoration: BoxDecoration(
+                                                  color: theme.secondary,
+                                                  // shape: BoxShape.circle,
+                                                  borderRadius:
+                                                      BorderRadius.circular(2),
+                                                ),
+                                              )
+                                            else
+                                              const SizedBox(height: 6),
                                           ],
                                         ),
                                         builder: (_, value, child) {

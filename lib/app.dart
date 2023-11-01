@@ -1,6 +1,5 @@
 import 'package:agendai/core/firebase/messaging/app_messaging.dart';
 import 'package:agendai/core/theme/app_theme.dart';
-import 'package:agendai/core/utils/no_glow_behavior.dart';
 import 'package:agendai/core/widgets/alert/alert_area.dart';
 import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:device_preview/device_preview.dart';
@@ -77,17 +76,15 @@ class _AppState extends State<App> {
             ),
             highlightColor: theme.primary.withOpacity(0.1),
             splashColor: theme.primary.withOpacity(0.1),
+            useMaterial3: true,
           ),
           locale: DevicePreview.locale(context),
           builder: (context, child) {
-            final newChild = ScrollConfiguration(
-              behavior: NoGlowBehavior(),
-              child: Stack(
-                children: [
-                  if (child != null) child,
-                  const AlertArea(),
-                ],
-              ),
+            final newChild = Stack(
+              children: [
+                if (child != null) child,
+                const AlertArea(),
+              ],
             );
             return DevicePreview.appBuilder(context, newChild);
           },

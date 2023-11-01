@@ -4,8 +4,11 @@ import 'package:agendai/features/professional/data/professional_repository.dart'
 import 'package:agendai/features/professional/models/professional_details.dart';
 import 'package:agendai/features/professional/models/service.dart';
 import 'package:agendai/features/scheduling/data/scheduling_repository.dart';
+import 'package:agendai/features/scheduling/models/day_slots.dart';
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 part 'schedule_services_page_state.dart';
 
@@ -45,19 +48,61 @@ class ScheduleServicesPageCubit extends Cubit<ScheduleServicesPageState> {
     } else {
       emit(state.copyAddingService(service));
     }
+
+    await updateAvailableSlots();
+
+    if (state.selectedDay != null) {
+      final newSlots = state.daySlots!.firstWhere((d) =>
+          DateUtils.dateOnly(d.date) == DateUtils.dateOnly(state.selectedDay!));
+
+      final keepSlot =
+          newSlots.slots.any((s) => s.startDate == state.selectedDay);
+
+      if (!keepSlot) {
+        emit(state.copyWith(
+            selectedDay: DateUtils.dateOnly(state.selectedDay!)));
+      }
+    }
   }
 
   Future<void> onRangeChanged(DateTime startDate, DateTime endDate) async {
-    print('$startDate, $endDate');
+    emit(
+        state.copyWith(currentRange: (startDate: startDate, endDate: endDate)));
+
+    return updateAvailableSlots();
+  }
+
+  void onDayChanged(DateTime day) {
+    emit(
+      state.copyWith(
+          selectedDay: day,
+          selectedDaySlots: state.daySlots!.firstWhere(
+              (d) => DateUtils.dateOnly(d.date) == DateUtils.dateOnly(day))),
+    );
+  }
+
+  Future<void> updateAvailableSlots() async {
+    if (state.currentRange == null) return;
+
+    emit(state.copyWith(daySlots: () => null));
 
     final daySlots = await _schedulingRepository.getSchedulingSlots(
       duration: state.selectedServices.fold(
           0, (previousValue, element) => previousValue + element.duration),
       professionalId: professionalId,
-      startDate: startDate,
-      endDate: endDate.add(const Duration(days: 1)),
+      startDate: state.currentRange!.startDate,
+      endDate: state.currentRange!.endDate.add(const Duration(days: 1)),
     );
 
-    print(daySlots);
+    if (daySlots case Success(:final object)) {
+      final newDaySlots = state.selectedDay != null
+          ? object.firstWhereOrNull((d) =>
+              DateUtils.dateOnly(d.date) ==
+              DateUtils.dateOnly(state.selectedDay!))
+          : null;
+
+      emit(state.copyWith(
+          daySlots: () => object, selectedDaySlots: newDaySlots));
+    }
   }
 }

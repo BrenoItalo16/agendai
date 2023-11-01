@@ -1,11 +1,11 @@
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_base_page.dart';
-import 'package:agendai/core/widgets/app_chip.dart';
 import 'package:agendai/core/widgets/app_elevated_button.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/schedule_services_page_cubit.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/widgets/schedule_services_day_selector.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/widgets/schedule_services_month_selector.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/widgets/schedule_services_services_selector.dart';
+import 'package:agendai/features/scheduling/pages/schedule_services/widgets/schedule_services_time_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -58,55 +58,24 @@ class _ScheduleServicesPageState extends State<ScheduleServicesPage> {
                       BlocBuilder<ScheduleServicesPageCubit,
                           ScheduleServicesPageState>(
                         builder: (context, state) {
+                          final cubit =
+                              context.read<ScheduleServicesPageCubit>();
+
+                          if (state.selectedServices.isEmpty)
+                            return Container();
+
                           return ScheduleServicesDaySelector(
                             currentMonth: state.selectedMonth,
                             lastDay: state.lastAvailableDay,
-                            onMonthChanged: context
-                                .read<ScheduleServicesPageCubit>()
-                                .changeSelectMonth,
-                            onRangeChanged: context
-                                .read<ScheduleServicesPageCubit>()
-                                .onRangeChanged,
+                            onMonthChanged: cubit.changeSelectMonth,
+                            onRangeChanged: cubit.onRangeChanged,
+                            onDaySelected: cubit.onDayChanged,
+                            daySlots: state.daySlots,
                           );
                         },
                       ),
                       const SizedBox(height: 24),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Horários disponíveis',
-                              style: theme.body18Bold,
-                            ),
-                            Text(
-                              'Selecione um horário para realizar o agendamento',
-                              style: theme.body13,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Wrap(
-                          runSpacing: 8,
-                          spacing: 8,
-                          children: [
-                            for (int i = 0; i < 10; i++)
-                              AppChip(
-                                text: 'Agosto',
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 8),
-                                textStyle: theme.body16.copyWith(
-                                  color: theme.primary,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                          ],
-                        ),
-                      )
+                      const ScheduleServicesTimeSelector(),
                     ],
                   )
                 : Container(),

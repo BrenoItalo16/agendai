@@ -6,6 +6,10 @@ class ScheduleServicesPageState extends Equatable {
     this.professional,
     this.loading = false,
     required this.selectedServices,
+    this.daySlots,
+    this.currentRange,
+    this.selectedDay,
+    this.selectedDaySlots,
   });
 
   ScheduleServicesPageState.initial()
@@ -15,13 +19,21 @@ class ScheduleServicesPageState extends Equatable {
         ),
         professional = null,
         loading = false,
-        selectedServices = [];
+        selectedServices = [],
+        daySlots = null,
+        currentRange = null,
+        selectedDay = null,
+        selectedDaySlots = null;
 
   final DateTime selectedMonth;
+  final DateTime? selectedDay;
+  final DaySlots? selectedDaySlots;
   final DateTime firstAvailableDay = DateTime.now();
   final ProfessionalDetails? professional;
   final bool loading;
   final List<Service> selectedServices;
+  final List<DaySlots>? daySlots;
+  final ({DateTime startDate, DateTime endDate})? currentRange;
 
   List<DateTime> get availableMonths {
     Set<DateTime> months = {};
@@ -36,20 +48,36 @@ class ScheduleServicesPageState extends Equatable {
       firstAvailableDay.add(const Duration(days: 120));
 
   @override
-  List<Object?> get props =>
-      [selectedMonth, loading, professional, selectedServices];
+  List<Object?> get props => [
+        selectedMonth,
+        loading,
+        professional,
+        selectedServices,
+        daySlots,
+        currentRange,
+        selectedDay,
+        selectedDaySlots,
+      ];
 
   ScheduleServicesPageState copyWith({
     DateTime? selectedMonth,
     ProfessionalDetails? professional,
     bool? loading,
     List<Service>? selectedServices,
+    ValueGetter<List<DaySlots>?>? daySlots,
+    ({DateTime startDate, DateTime endDate})? currentRange,
+    DateTime? selectedDay,
+    DaySlots? selectedDaySlots,
   }) {
     return ScheduleServicesPageState(
       selectedMonth: selectedMonth ?? this.selectedMonth,
       professional: professional ?? this.professional,
       loading: loading ?? this.loading,
       selectedServices: selectedServices ?? this.selectedServices,
+      daySlots: daySlots != null ? daySlots() : this.daySlots,
+      currentRange: currentRange ?? this.currentRange,
+      selectedDay: selectedDay ?? this.selectedDay,
+      selectedDaySlots: selectedDaySlots ?? this.selectedDaySlots,
     );
   }
 
