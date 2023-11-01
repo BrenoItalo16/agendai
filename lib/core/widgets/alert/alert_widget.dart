@@ -1,6 +1,6 @@
-import 'package:agendai/core/alert/alert_area_cubit.dart';
 import 'package:agendai/core/di/di.dart';
 import 'package:agendai/core/theme/app_theme.dart';
+import 'package:agendai/core/widgets/alert/alert_area_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
@@ -62,37 +62,53 @@ class _AlertWidgetState extends State<AlertWidget>
           opacity: opacityAnimation.value,
           child: Container(
             decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: t.shadow.withOpacity(0.08),
+                  spreadRadius: 0,
+                  blurRadius: 15,
+                  offset: const Offset(2, 10), // changes position of shadow
+                ),
+              ],
               borderRadius: BorderRadius.circular(8),
               color: switch (widget.alert.type) {
                 AlertType.error => t.red,
                 AlertType.success => t.green,
+                AlertType.notification => t.white,
               },
             ),
             padding: const EdgeInsets.all(24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    widget.alert.title,
-                    style: TextStyle(
-                      color: switch (widget.alert.type) {
-                        AlertType.error => t.white,
-                        AlertType.success => t.black,
-                      },
+            child: InkWell(
+              onTap: () {
+                widget.alert.onPressed;
+                getIt<AlertAreaCubit>().removeAlert(widget.alert);
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.alert.title, style: t.body16Bold),
+                        if (widget.alert.subtitle != null)
+                          Text(widget.alert.subtitle!, style: t.body13),
+                      ],
                     ),
                   ),
-                ),
-                Icon(
-                  switch (widget.alert.type) {
-                    AlertType.error => IconlyLight.danger,
-                    AlertType.success => IconlyLight.tick_square,
-                  },
-                  color: switch (widget.alert.type) {
-                    AlertType.error => t.white,
-                    AlertType.success => t.black,
-                  },
-                ),
-              ],
+                  Icon(
+                    switch (widget.alert.type) {
+                      AlertType.error => IconlyLight.danger,
+                      AlertType.success => IconlyLight.tick_square,
+                      AlertType.notification => IconlyLight.notification,
+                    },
+                    color: switch (widget.alert.type) {
+                      AlertType.error => t.white,
+                      AlertType.success => t.black,
+                      AlertType.notification => t.txtColor,
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

@@ -1,6 +1,6 @@
-import 'package:agendai/core/alert/alert_area_cubit.dart';
-import 'package:agendai/core/alert/alert_widget.dart';
 import 'package:agendai/core/di/di.dart';
+import 'package:agendai/core/widgets/alert/alert_area_cubit.dart';
+import 'package:agendai/core/widgets/alert/alert_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

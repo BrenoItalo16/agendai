@@ -4,4 +4,5 @@ abstract class SplashPageActions {
   void navToForceUpdate();
   void navToHome();
   void navToAuth();
+  void navToPath(String path);
 }

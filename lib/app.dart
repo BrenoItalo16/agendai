@@ -1,8 +1,12 @@
-import 'package:agendai/core/alert/alert_area.dart';
+import 'package:agendai/core/firebase/messaging/app_messaging.dart';
 import 'package:agendai/core/theme/app_theme.dart';
+import 'package:agendai/core/widgets/alert/alert_area.dart';
+import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/di/di.dart';
 import 'core/flavor/flavor_config.dart';
 import 'core/route/app_routes.dart';
@@ -17,7 +21,12 @@ Future<void> bootstrap(FlavorConfig config) async {
   );
 
   await configureDependencies(config);
-  // await Future.delayed(const Duration(seconds: 4));
+
+  getIt<AppMessaging>().configure();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   runApp(
     DevicePreview(
@@ -38,26 +47,48 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (_) => AppTheme(),
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: router,
-        theme: ThemeData.light().copyWith(
-          colorScheme: ThemeData.light().colorScheme.copyWith(
-                background: Colors.white,
-              ),
+    final theme = AppTheme();
+    return RepositoryProvider.value(
+      value: theme,
+      child: BlocProvider.value(
+        value: getIt<SessionCubit>(),
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('pt', 'BR'),
+          ],
+          theme: ThemeData.light().copyWith(
+            scaffoldBackgroundColor: theme.white,
+            colorScheme: ThemeData.light().colorScheme.copyWith(
+                  background: Colors.white,
+                ),
+            //? Customize field info
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: theme.primary,
+              selectionHandleColor: theme.primary,
+              selectionColor: theme.primary.withOpacity(0.4),
+            ),
+            highlightColor: theme.primary.withOpacity(0.1),
+            splashColor: theme.primary.withOpacity(0.1),
+            useMaterial3: true,
+          ),
+          locale: DevicePreview.locale(context),
+          builder: (context, child) {
+            final newChild = Stack(
+              children: [
+                if (child != null) child,
+                const AlertArea(),
+              ],
+            );
+            return DevicePreview.appBuilder(context, newChild);
+          },
         ),
-        locale: DevicePreview.locale(context),
-        builder: (context, child) {
-          final newChild = Stack(
-            children: [
-              if (child != null) child,
-              const AlertArea(),
-            ],
-          );
-          return DevicePreview.appBuilder(context, newChild);
-        },
       ),
     );
   }

@@ -1,0 +1,4 @@
+enum SignUpFailed {
+  // userAlreadyExists,
+  unknownError,
+}

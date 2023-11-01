@@ -14,7 +14,7 @@ class User {
     required this.phone,
   });
 
-  factory User.fromMap(Map<String, dynamic> map) {
+  factory User.fromJson(Map<String, dynamic> map) {
     return User(
       id: map['id'] as String,
       token: map['token'] as String,

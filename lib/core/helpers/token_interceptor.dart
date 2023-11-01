@@ -1,11 +1,17 @@
+import 'package:agendai/core/di/di.dart';
+import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:dio/dio.dart';
 
 class TokenInterceptor extends Interceptor {
-  // final AuthRepository authRepository = AuthRepository();
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // options.headers['X-Parse-Session-Token'] =
-    //     'r:7d618fd5b9d890d3231516ba3d11b129';
+    final SessionCubit sessionCubit = getIt();
+
+    final user = sessionCubit.state.loggedUser;
+    if (user != null) {
+      options.headers['X-Parse-Session-Token'] = user.token;
+    }
+
     handler.next(options);
   }
 }

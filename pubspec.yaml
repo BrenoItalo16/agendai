@@ -44,7 +44,7 @@ dependencies:
   bloc: ^8.1.2
   equatable: ^2.0.5
   firebase_core: ^2.15.0
-  firebase_analytics: ^10.4.4
+  firebase_analytics: ^10.6.1
   firebase_crashlytics: ^3.3.4
   firebase_messaging: ^14.6.5
   firebase_remote_config: ^4.2.4
@@ -58,6 +58,18 @@ dependencies:
   geolocator: ^10.0.0
   url_launcher:
   store_redirect: ^2.0.1
+  brasil_fields:
+  formz: ^0.6.0
+  email_validator: ^2.1.16
+  loading_animation_widget: ^1.2.0+4
+  shimmer: ^3.0.0
+  intl:
+  glassmorphism: ^3.0.0
+  cached_network_image: ^3.3.0
+  flutter_localizations:
+    sdk: flutter
+  uuid:
+  collection:
 
 dev_dependencies:
   bloc_test: ^9.1.3
