@@ -77,7 +77,7 @@ class AppElevatedSwitch extends AppState {
                         child: Text(
                           enabledText,
                           style: theme.body13Bold.copyWith(
-                              color: !enabled ? theme.grey : theme.black),
+                              color: !enabled ? theme.grey : theme.txtColor),
                         ),
                       ),
                     ),

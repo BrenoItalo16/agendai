@@ -269,7 +269,8 @@ class _ScheduleServicesDaySelectorState
                                                   color: hasAvailableSlot(
                                                           day.dateTime)
                                                       ? theme.secondary
-                                                      : theme.red,
+                                                      : theme.grey
+                                                          .withOpacity(0.4),
                                                   shape: BoxShape.circle,
                                                 ),
                                               )

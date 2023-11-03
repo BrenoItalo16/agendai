@@ -62,7 +62,10 @@ class HomeNextScheduleItem extends StatelessWidget {
               color: t.primary.withOpacity(0.18),
             ),
             padding: const EdgeInsets.all(8),
-            child: const Icon(IconlyLight.location),
+            child: Icon(
+              IconlyLight.location,
+              color: t.primary,
+            ),
           )
         ],
       ),
