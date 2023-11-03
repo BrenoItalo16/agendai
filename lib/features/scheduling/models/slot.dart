@@ -1,5 +1,7 @@
-class Slot {
-  Slot({required this.startDate, required this.endDate});
+import 'package:equatable/equatable.dart';
+
+class Slot extends Equatable {
+  const Slot({required this.startDate, required this.endDate});
 
   final DateTime startDate;
   final DateTime endDate;
@@ -10,4 +12,7 @@ class Slot {
       endDate: DateTime.parse(json['endDate']),
     );
   }
+
+  @override
+  List<Object?> get props => [startDate, endDate];
 }

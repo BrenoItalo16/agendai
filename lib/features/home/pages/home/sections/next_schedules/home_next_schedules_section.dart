@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeNextSchedulesSection extends StatefulWidget {
-  const HomeNextSchedulesSection({super.key});
+  const HomeNextSchedulesSection({Key? key}) : super(key: key);
 
   @override
   State<HomeNextSchedulesSection> createState() =>
@@ -18,7 +18,7 @@ class HomeNextSchedulesSection extends StatefulWidget {
 class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
   final HomeNextSchedulesCubit cubit = HomeNextSchedulesCubit();
 
-  void loadingSchedulings(bool isLoggedIn) {
+  void loadSchedulings(bool isLoggedIn) {
     if (isLoggedIn) {
       cubit.loadSchedulings();
     } else {
@@ -28,11 +28,11 @@ class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
 
   @override
   Widget build(BuildContext context) {
-    AppTheme t = context.watch();
+    final AppTheme t = context.watch();
 
     return AppSessionObserver(
       listener: (sessionState) {
-        loadingSchedulings(sessionState.loggedUser != null);
+        loadSchedulings(sessionState.loggedUser != null);
       },
       child: BlocProvider.value(
         value: cubit,
@@ -45,12 +45,12 @@ class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
                   'Próximos agendamentos',
-                  style: t.body18Bold,
+                  style: t.body16Bold,
                 ),
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 120 * MediaQuery.textScaleFactorOf(context) + 28,
+                height: 120 + 24,
                 child:
                     BlocBuilder<HomeNextSchedulesCubit, HomeNextSchedulesState>(
                   builder: (context, state) {
@@ -58,28 +58,34 @@ class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
                       HomeNextSchedulesStatus.loading => AppSkeleton(
                           margin: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                           child: OverflowBox(
-                            maxWidth: 600,
-                            alignment: Alignment.bottomLeft,
+                            maxWidth: 1000,
+                            alignment: Alignment.centerLeft,
                             child: Row(
                               children: [
                                 const SizedBox(width: 24),
-                                AppCard(width: 270, child: Container()),
+                                AppCard(
+                                  width: 270,
+                                  child: Container(),
+                                ),
                                 const SizedBox(width: 16),
-                                AppCard(width: 270, child: Container()),
+                                AppCard(
+                                  width: 270,
+                                  child: Container(),
+                                ),
                               ],
                             ),
                           ),
                         ),
-                      HomeNextSchedulesStatus.notLoggedIn => Container(
-                          color: Colors.blue,
-                        ),
-                      HomeNextSchedulesStatus.error => Container(
-                          color: Colors.amberAccent,
-                        ),
+                      HomeNextSchedulesStatus.notLoggedIn =>
+                        Container(color: Colors.blue),
+                      HomeNextSchedulesStatus.error =>
+                        Container(color: Colors.red),
                       HomeNextSchedulesStatus.success => ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
                           scrollDirection: Axis.horizontal,
-                          separatorBuilder: (_, i) => const SizedBox(width: 16),
+                          separatorBuilder: (_, i) => const SizedBox(
+                            width: 16,
+                          ),
                           itemCount: state.schedulings!.length,
                           itemBuilder: (_, i) => SizedBox(
                             width: state.schedulings!.length == 1
@@ -87,9 +93,10 @@ class _HomeNextSchedulesSectionState extends State<HomeNextSchedulesSection> {
                                 : 270,
                             child: HomeNextScheduleItem(
                               scheduling: state.schedulings![i],
+                              shadowOffset: const Offset(6, 12),
                             ),
                           ),
-                        ),
+                        )
                     };
                   },
                 ),

@@ -3,10 +3,8 @@ part of 'home_next_schedules_cubit.dart';
 enum HomeNextSchedulesStatus { notLoggedIn, loading, success, error }
 
 class HomeNextSchedulesState extends Equatable {
-  const HomeNextSchedulesState({
-    required this.status,
-    required this.schedulings,
-  });
+  const HomeNextSchedulesState(
+      {required this.schedulings, required this.status});
 
   const HomeNextSchedulesState.empty()
       : schedulings = null,

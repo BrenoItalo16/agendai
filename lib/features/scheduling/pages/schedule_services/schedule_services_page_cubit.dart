@@ -5,15 +5,18 @@ import 'package:agendai/features/professional/models/professional_details.dart';
 import 'package:agendai/features/professional/models/service.dart';
 import 'package:agendai/features/scheduling/data/scheduling_repository.dart';
 import 'package:agendai/features/scheduling/models/day_slots.dart';
+import 'package:agendai/features/scheduling/models/slot.dart';
+import 'package:agendai/features/scheduling/pages/schedule_services/schedule_services_page_actions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 part 'schedule_services_page_state.dart';
 
 class ScheduleServicesPageCubit extends Cubit<ScheduleServicesPageState> {
-  ScheduleServicesPageCubit(
+  ScheduleServicesPageCubit(this.actions,
       {required this.professionalId,
       ProfessionalRepository? professionalRepository,
       SchedulingRepository? schedulingRepository})
@@ -21,6 +24,7 @@ class ScheduleServicesPageCubit extends Cubit<ScheduleServicesPageState> {
         _schedulingRepository = schedulingRepository ?? getIt(),
         super(ScheduleServicesPageState.initial());
 
+  ScheduleServicesPageActions? actions;
   final String professionalId;
   final ProfessionalRepository _professionalRepository;
   final SchedulingRepository _schedulingRepository;
@@ -75,10 +79,16 @@ class ScheduleServicesPageCubit extends Cubit<ScheduleServicesPageState> {
   void onDayChanged(DateTime day) {
     emit(
       state.copyWith(
-          selectedDay: day,
-          selectedDaySlots: state.daySlots!.firstWhere(
-              (d) => DateUtils.dateOnly(d.date) == DateUtils.dateOnly(day))),
+        selectedDay: day,
+        selectedDaySlots: state.daySlots!.firstWhere(
+            (d) => DateUtils.dateOnly(d.date) == DateUtils.dateOnly(day)),
+        selectedSlot: () => null,
+      ),
     );
+  }
+
+  void onTimeChanged(Slot slot) {
+    emit(state.copyWith(selectedSlot: () => slot));
   }
 
   Future<void> updateAvailableSlots() async {
@@ -104,5 +114,32 @@ class ScheduleServicesPageCubit extends Cubit<ScheduleServicesPageState> {
       emit(state.copyWith(
           daySlots: () => object, selectedDaySlots: newDaySlots));
     }
+  }
+
+  Future<void> scheduleServices() async {
+    emit(state.copyWith(loading: true));
+
+    final responses = await Future.wait([
+      _schedulingRepository.scheduleServices(
+        professionalId: professionalId,
+        servicesId: state.selectedServices.map((s) => s.id).toList(),
+        startDate: state.selectedSlot!.startDate,
+        endDate: state.selectedSlot!.endDate,
+      ),
+      Future.delayed(const Duration(seconds: 1)),
+    ]);
+
+    final result = responses.first;
+    if (result case Success(object: final id)) {
+      actions?.navToScheduling(id);
+    }
+
+    emit(state.copyWith(loading: false));
+  }
+
+  @override
+  Future<void> close() {
+    actions = null;
+    return super.close();
   }
 }

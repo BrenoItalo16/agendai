@@ -3,23 +3,23 @@ import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_elevated_button.dart';
 import 'package:agendai/core/widgets/app_session_observer.dart';
 import 'package:agendai/core/widgets/app_simple_header.dart';
-import 'package:agendai/features/home/pages/notifications/notifications_page_cubit.dart';
-import 'package:agendai/features/home/pages/notifications/widgets/notifications_list_area.dart';
 import 'package:agendai/core/widgets/app_elevated_switch.dart';
+import 'package:agendai/features/home/pages/schedulings/schedulings_page_cubit.dart';
+import 'package:agendai/features/home/pages/schedulings/widgets/schedulings_list_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({Key? key}) : super(key: key);
+class SchedulingsPage extends StatefulWidget {
+  const SchedulingsPage({Key? key}) : super(key: key);
 
   @override
-  State<NotificationsPage> createState() => _NotificationsPageState();
+  State<SchedulingsPage> createState() => _SchedulingsPageState();
 }
 
-class _NotificationsPageState extends State<NotificationsPage>
+class _SchedulingsPageState extends State<SchedulingsPage>
     with AutomaticKeepAliveClientMixin {
-  bool showRead = false;
+  bool showHistory = false;
   final PageController pageController = PageController();
 
   @override
@@ -30,7 +30,7 @@ class _NotificationsPageState extends State<NotificationsPage>
 
     return Column(
       children: [
-        const AppSimpleHeader(title: 'Notificações'),
+        const AppSimpleHeader(title: 'Agendamentos'),
         Expanded(
           child: AppSessionObserver(
             builder: (_, state) {
@@ -38,15 +38,15 @@ class _NotificationsPageState extends State<NotificationsPage>
                 return Column(
                   children: [
                     AppElevatedSwitch(
-                      disabledText: 'Não lidas',
-                      enabledText: 'Lidas',
-                      enabled: showRead,
+                      disabledText: 'Próximos',
+                      enabledText: 'Histórico',
+                      enabled: showHistory,
                       onChanged: (r) {
                         setState(() {
-                          showRead = r;
+                          showHistory = r;
                         });
                         pageController.animateToPage(
-                          showRead ? 1 : 0,
+                          showHistory ? 1 : 0,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.ease,
                         );
@@ -57,12 +57,8 @@ class _NotificationsPageState extends State<NotificationsPage>
                         controller: pageController,
                         physics: const NeverScrollableScrollPhysics(),
                         children: const [
-                          NotificationsListArea(
-                            status: NotificationStatus.notRead,
-                          ),
-                          NotificationsListArea(
-                            status: NotificationStatus.read,
-                          ),
+                          SchedulingsListArea(status: SchedulingsStatus.future),
+                          SchedulingsListArea(status: SchedulingsStatus.past),
                         ],
                       ),
                     ),
@@ -79,7 +75,7 @@ class _NotificationsPageState extends State<NotificationsPage>
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Entre para ver suas notificações!',
+                      'Entre para ver seus agendamentos!',
                       style: theme.body16Bold,
                     ),
                     const SizedBox(height: 16),
@@ -94,7 +90,7 @@ class _NotificationsPageState extends State<NotificationsPage>
                               path: AppRoutes.login.fullPath,
                               queryParameters: {
                                 'redirectTo':
-                                    '${AppRoutes.home}?initialTab=notifications'
+                                    '${AppRoutes.home}?initialTab=schedulings'
                               });
                           context.go(uri.toString());
                         },
