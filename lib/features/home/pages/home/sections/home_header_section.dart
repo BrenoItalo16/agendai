@@ -4,11 +4,12 @@ import 'package:agendai/features/auth/data/session/cubit/session_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeHeaderSection extends StatelessWidget {
-  const HomeHeaderSection({super.key});
+  const HomeHeaderSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final AppTheme t = context.watch();
+
     return SafeArea(
       bottom: false,
       child: Padding(
@@ -23,7 +24,7 @@ class HomeHeaderSection extends StatelessWidget {
                   sessionCubit.logout();
                 } else {
                   sessionCubit.login(
-                      email: 'user@user.com', password: '12345678');
+                      email: 'teste2@startto.dev', password: '12345678');
                 }
               },
               color: t.black,

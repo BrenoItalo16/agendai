@@ -10,6 +10,7 @@ class ScheduleServicesPageState extends Equatable {
     this.currentRange,
     this.selectedDay,
     this.selectedDaySlots,
+    this.selectedSlot,
   });
 
   ScheduleServicesPageState.initial()
@@ -23,10 +24,12 @@ class ScheduleServicesPageState extends Equatable {
         daySlots = null,
         currentRange = null,
         selectedDay = null,
-        selectedDaySlots = null;
+        selectedDaySlots = null,
+        selectedSlot = null;
 
   final DateTime selectedMonth;
   final DateTime? selectedDay;
+  final Slot? selectedSlot;
   final DaySlots? selectedDaySlots;
   final DateTime firstAvailableDay = DateTime.now();
   final ProfessionalDetails? professional;
@@ -57,6 +60,7 @@ class ScheduleServicesPageState extends Equatable {
         currentRange,
         selectedDay,
         selectedDaySlots,
+        selectedSlot,
       ];
 
   ScheduleServicesPageState copyWith({
@@ -68,6 +72,7 @@ class ScheduleServicesPageState extends Equatable {
     ({DateTime startDate, DateTime endDate})? currentRange,
     DateTime? selectedDay,
     DaySlots? selectedDaySlots,
+    ValueGetter<Slot?>? selectedSlot,
   }) {
     return ScheduleServicesPageState(
       selectedMonth: selectedMonth ?? this.selectedMonth,
@@ -78,6 +83,7 @@ class ScheduleServicesPageState extends Equatable {
       currentRange: currentRange ?? this.currentRange,
       selectedDay: selectedDay ?? this.selectedDay,
       selectedDaySlots: selectedDaySlots ?? this.selectedDaySlots,
+      selectedSlot: selectedSlot != null ? selectedSlot() : this.selectedSlot,
     );
   }
 

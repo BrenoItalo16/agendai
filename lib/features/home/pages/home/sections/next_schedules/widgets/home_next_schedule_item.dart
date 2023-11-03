@@ -10,20 +10,25 @@ import 'package:iconly/iconly.dart';
 import 'package:intl/intl.dart';
 
 class HomeNextScheduleItem extends StatelessWidget {
-  const HomeNextScheduleItem({super.key, required this.scheduling});
+  const HomeNextScheduleItem({
+    Key? key,
+    required this.scheduling,
+    required this.shadowOffset,
+  }) : super(key: key);
 
   final Scheduling scheduling;
+  final Offset shadowOffset;
 
   @override
   Widget build(BuildContext context) {
     final AppTheme t = context.watch();
+
     return AppCard(
       onPressed: () {
-        context.push(
-          AppRoutes.professionalDetails
-              .fullPath(id: scheduling.professional.id),
-        );
+        context.push(AppRoutes.professionalDetails
+            .fullPath(id: scheduling.professional.id));
       },
+      shadowOffset: shadowOffset,
       child: Row(
         children: [
           Expanded(
@@ -44,8 +49,8 @@ class HomeNextScheduleItem extends StatelessWidget {
                 ),
                 Text(
                   scheduling.professional.name,
-                  style: t.body13.copyWith(color: t.txtColor),
-                ),
+                  style: t.body13Bold.copyWith(color: t.grey),
+                )
               ],
             ),
           ),
@@ -56,11 +61,12 @@ class HomeNextScheduleItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
               color: t.primary.withOpacity(0.18),
             ),
+            padding: const EdgeInsets.all(8),
             child: Icon(
               IconlyLight.location,
               color: t.primary,
             ),
-          ),
+          )
         ],
       ),
     );

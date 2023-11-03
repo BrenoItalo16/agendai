@@ -8,8 +8,9 @@ class SchedulingRepository {
 
   final SchedulingDatasource _datasource;
 
-  Future<Result<void, List<Scheduling>>> getUserSchedules() {
-    return _datasource.getUserSchedules();
+  Future<Result<void, List<Scheduling>>> getUserSchedules(
+      int page, bool futures) {
+    return _datasource.getUserSchedules(page, futures);
   }
 
   Future<Result<void, List<DaySlots>>> getSchedulingSlots({
@@ -21,6 +22,20 @@ class SchedulingRepository {
     return _datasource.getSchedulingSlots(
       duration: duration,
       professionalId: professionalId,
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
+
+  Future<Result<void, String>> scheduleServices({
+    required String professionalId,
+    required List<String> servicesId,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    return _datasource.scheduleServices(
+      professionalId: professionalId,
+      servicesId: servicesId,
       startDate: startDate,
       endDate: endDate,
     );

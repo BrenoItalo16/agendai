@@ -14,8 +14,9 @@ class ScheduleServicesTimeSelector extends AppState {
   Widget builder(BuildContext context, AppTheme theme) {
     return BlocBuilder<ScheduleServicesPageCubit, ScheduleServicesPageState>(
       builder: (context, state) {
-        if (state.selectedServices.isEmpty || state.selectedDay == null)
+        if (state.selectedServices.isEmpty || state.selectedDay == null) {
           return Container();
+        }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +27,7 @@ class ScheduleServicesTimeSelector extends AppState {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Horários disponíveis',
+                    'Horários disponíveis para o dia ${DateFormat('dd/MM').format(state.selectedDay!)}',
                     style: theme.body18Bold,
                   ),
                   Text(
@@ -37,7 +38,8 @@ class ScheduleServicesTimeSelector extends AppState {
               ),
             ),
             const SizedBox(height: 16),
-            if (state.selectedDaySlots != null)
+            if (state.selectedDaySlots != null &&
+                state.selectedDaySlots!.slots.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
@@ -53,24 +55,32 @@ class ScheduleServicesTimeSelector extends AppState {
                             vertical: 8,
                           ),
                           textStyle: theme.body16.copyWith(
-                            color: slot.startDate == state.selectedDay
+                            color: slot == state.selectedSlot
                                 ? Colors.white
                                 : theme.primary,
                             fontWeight: FontWeight.w600,
                           ),
-                          color: slot.startDate == state.selectedDay
+                          color: slot == state.selectedSlot
                               ? theme.primary
                               : Colors.white,
                           onTap: () {
                             context
                                 .read<ScheduleServicesPageCubit>()
-                                .onDayChanged(slot.startDate);
+                                .onTimeChanged(slot);
                           },
                         ),
                     ],
                   ),
                 ),
-              ),
+              )
+            else
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Nenhum horário disponível para este dia. Por favor, selecione outra data.',
+                  style: theme.body13,
+                ),
+              )
           ],
         );
       },

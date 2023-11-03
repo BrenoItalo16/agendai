@@ -13,6 +13,7 @@ import 'package:agendai/features/intro/pages/splash/splash_page.dart';
 import 'package:agendai/features/professional/pages/professional_details/professional_details_page.dart';
 import 'package:agendai/features/professional/pages/professional_ratings/professional_ratings_page.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/schedule_services_page.dart';
+import 'package:agendai/features/scheduling/pages/scheduling_details/scheduling_details_page.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -138,6 +139,15 @@ final router = GoRouter(
             ),
           ],
         ),
+        GoRoute(
+          path: AppRoutes.schedulingDetails.path,
+          pageBuilder: (context, state) => CustomPage(
+            state: state,
+            child: SchedulingDetailsPage(
+              schedulingId: state.pathParameters['id']!,
+            ),
+          ),
+        ),
       ],
     ),
   ],
@@ -174,6 +184,11 @@ class AppRoutes {
   static AppRouteWithId professionalScheduleServices = AppRouteWithId(
     path: 'schedule-services',
     buildFullPath: (id) => '/professionals/$id/schedule-services',
+  );
+
+  static AppRouteWithId schedulingDetails = AppRouteWithId(
+    path: 'scheduling/:id',
+    buildFullPath: (id) => '/scheduling/$id',
   );
 }
 

@@ -8,9 +8,13 @@ class SchedulingDatasource {
 
   final Dio _dio;
 
-  Future<Result<void, List<Scheduling>>> getUserSchedules() async {
+  Future<Result<void, List<Scheduling>>> getUserSchedules(
+      int page, bool futures) async {
     try {
-      final response = await _dio.post('/v1-get-user-schedules');
+      final response = await _dio.post('/v1-get-user-schedules', data: {
+        'page': page,
+        'futures': futures,
+      });
       return Success(response.data['result']
           .map<Scheduling>((s) => Scheduling.fromMap(s))
           .toList());
@@ -35,6 +39,25 @@ class SchedulingDatasource {
       return Success(response.data['result']
           .map<DaySlots>((s) => DaySlots.fromMap(s))
           .toList());
+    } catch (e) {
+      return const Failure(null);
+    }
+  }
+
+  Future<Result<void, String>> scheduleServices({
+    required String professionalId,
+    required List<String> servicesId,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    try {
+      final response = await _dio.post('/v1-schedule-services', data: {
+        'professionalId': professionalId,
+        'serviceIds': servicesId,
+        'startDate': startDate.toIso8601String(),
+        'endDate': endDate.toIso8601String(),
+      });
+      return Success(response.data['result']['id']);
     } catch (e) {
       return const Failure(null);
     }

@@ -1,15 +1,20 @@
-import 'package:agendai/core/widgets/base/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:agendai/core/theme/app_theme.dart';
 
-class NotificationsSwitch extends AppState {
-  const NotificationsSwitch({
+import 'package:agendai/core/theme/app_theme.dart';
+import 'package:agendai/core/widgets/base/app_state.dart';
+
+class AppElevatedSwitch extends AppState {
+  const AppElevatedSwitch({
     super.key,
-    required this.showRead,
+    required this.disabledText,
+    required this.enabledText,
+    required this.enabled,
     required this.onChanged,
   });
 
-  final bool showRead;
+  final String disabledText;
+  final String enabledText;
+  final bool enabled;
   final Function(bool) onChanged;
 
   @override
@@ -18,8 +23,8 @@ class NotificationsSwitch extends AppState {
       margin: const EdgeInsets.symmetric(horizontal: 24),
       height: 48,
       decoration: BoxDecoration(
-        color: theme.lightGrey,
         borderRadius: BorderRadius.circular(18),
+        color: theme.lightGrey,
       ),
       child: LayoutBuilder(
         builder: (_, constraints) {
@@ -27,20 +32,19 @@ class NotificationsSwitch extends AppState {
             children: [
               AnimatedAlign(
                 alignment:
-                    showRead ? Alignment.centerRight : Alignment.centerLeft,
+                    enabled ? Alignment.centerRight : Alignment.centerLeft,
                 duration: const Duration(milliseconds: 250),
                 child: Container(
                   width: constraints.maxWidth / 2,
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: theme.black.withOpacity(0.1),
-                          blurRadius: 40,
-                          offset: const Offset(0, 16)),
-                    ],
-                    color: theme.white,
-                    borderRadius: BorderRadius.circular(18),
-                  ),
+                      borderRadius: BorderRadius.circular(18),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: theme.primary.withOpacity(0.1),
+                            blurRadius: 40,
+                            offset: const Offset(0, 16))
+                      ]),
                 ),
               ),
               Row(
@@ -52,13 +56,12 @@ class NotificationsSwitch extends AppState {
                         onChanged(false);
                       },
                       child: Container(
-                        alignment: Alignment.center,
                         color: Colors.transparent,
+                        alignment: Alignment.center,
                         child: Text(
-                          'Não lidas',
-                          style: theme.body16Bold.copyWith(
-                            color: showRead ? theme.grey : theme.txtColor,
-                          ),
+                          disabledText,
+                          style: theme.body13Bold.copyWith(
+                              color: enabled ? theme.grey : theme.black),
                         ),
                       ),
                     ),
@@ -69,13 +72,12 @@ class NotificationsSwitch extends AppState {
                         onChanged(true);
                       },
                       child: Container(
-                        alignment: Alignment.center,
                         color: Colors.transparent,
+                        alignment: Alignment.center,
                         child: Text(
-                          'Lidas',
-                          style: theme.body16Bold.copyWith(
-                            color: showRead ? theme.txtColor : theme.grey,
-                          ),
+                          enabledText,
+                          style: theme.body13Bold.copyWith(
+                              color: !enabled ? theme.grey : theme.txtColor),
                         ),
                       ),
                     ),

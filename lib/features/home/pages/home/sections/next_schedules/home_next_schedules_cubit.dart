@@ -16,7 +16,7 @@ class HomeNextSchedulesCubit extends Cubit<HomeNextSchedulesState> {
 
   Future<void> loadSchedulings() async {
     emit(state.copyWith(status: HomeNextSchedulesStatus.loading));
-    final result = await _repository.getUserSchedules();
+    final result = await _repository.getUserSchedules(0, true);
     (switch (result) {
       Success(:final object) => emit(
           state.copyWith(

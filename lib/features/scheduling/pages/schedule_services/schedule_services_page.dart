@@ -1,6 +1,8 @@
+import 'package:agendai/core/route/app_routes.dart';
 import 'package:agendai/core/theme/app_theme.dart';
 import 'package:agendai/core/widgets/app_base_page.dart';
 import 'package:agendai/core/widgets/app_elevated_button.dart';
+import 'package:agendai/features/scheduling/pages/schedule_services/schedule_services_page_actions.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/schedule_services_page_cubit.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/widgets/schedule_services_day_selector.dart';
 import 'package:agendai/features/scheduling/pages/schedule_services/widgets/schedule_services_month_selector.dart';
@@ -8,6 +10,7 @@ import 'package:agendai/features/scheduling/pages/schedule_services/widgets/sche
 import 'package:agendai/features/scheduling/pages/schedule_services/widgets/schedule_services_time_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ScheduleServicesPage extends StatefulWidget {
   const ScheduleServicesPage({Key? key, required this.id}) : super(key: key);
@@ -18,8 +21,9 @@ class ScheduleServicesPage extends StatefulWidget {
   State<ScheduleServicesPage> createState() => _ScheduleServicesPageState();
 }
 
-class _ScheduleServicesPageState extends State<ScheduleServicesPage> {
-  late final cubit = ScheduleServicesPageCubit(professionalId: widget.id);
+class _ScheduleServicesPageState extends State<ScheduleServicesPage>
+    implements ScheduleServicesPageActions {
+  late final cubit = ScheduleServicesPageCubit(this, professionalId: widget.id);
 
   @override
   void initState() {
@@ -44,7 +48,8 @@ class _ScheduleServicesPageState extends State<ScheduleServicesPage> {
             bottomAction: AppElevatedButton(
               label: 'Agendar',
               id: 'agendar',
-              onPressed: () {},
+              onPressed:
+                  state.selectedSlot != null ? cubit.scheduleServices : null,
             ),
             bodyPadding: EdgeInsets.zero,
             body: state.professional != null
@@ -89,5 +94,10 @@ class _ScheduleServicesPageState extends State<ScheduleServicesPage> {
   void dispose() {
     cubit.close();
     super.dispose();
+  }
+
+  @override
+  void navToScheduling(String id) {
+    context.replace(AppRoutes.schedulingDetails.fullPath(id: id));
   }
 }
